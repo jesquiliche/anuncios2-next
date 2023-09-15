@@ -1,6 +1,6 @@
 // api.ts
 
-import { Categoria, Subcategoría, Provincia, Poblacion } from '../interfaces/interfaces';
+import { Categoria, Subcategoria, Provincia, Poblacion,Estado,Anuncios } from '../interfaces/interfaces';
 
 const apiUrl = 'https://nest-users-production.up.railway.app/api/v1';
 
@@ -18,13 +18,13 @@ export const fetchCategorias = async (): Promise<Categoria[]> => {
   }
 };
 
-export const fetchSubcategorias = async (id: string): Promise<Subcategoría[]> => {
+export const fetchSubcategorias = async (id: string): Promise<Subcategoria[]> => {
   try {
     const response = await fetch(`${apiUrl}/subcategorias/categoria/${id}`);
     if (!response.ok) {
       throw new Error('La solicitud no pudo completarse con éxito');
     }
-    const data: Subcategoría[] = await response.json();
+    const data: Subcategoria[] = await response.json();
     return data;
   } catch (error) {
     console.error('Error al cargar subcategorías:', error);
@@ -59,3 +59,32 @@ export const fetchProvincias = async (): Promise<Provincia[]> => {
     throw error;
   }
 };
+
+export const fetchEstados = async (): Promise<Estado[]> => {
+  try {
+    const response = await fetch(`${apiUrl}/estados`);
+    if (!response.ok) {
+      throw new Error('La solicitud no pudo completarse con éxito');
+    }
+    const data: Estado[] = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error al cargar provincias:', error);
+    throw error;
+  }
+};
+
+export const fetchAnuncios = async (): Promise<Anuncios> => {
+  try {
+    const response = await fetch(`${apiUrl}/anuncios?page=1&limit=20`);
+    if (!response.ok) {
+      throw new Error('La solicitud no pudo completarse con éxito');
+    }
+    const data: Anuncios = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error al cargar provincias:', error);
+    throw error;
+  }
+};
+
