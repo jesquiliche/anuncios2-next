@@ -2,7 +2,7 @@
 
 import { Categoria, Subcategoria, Provincia, Poblacion,Estado,Anuncios } from '../interfaces/interfaces';
 
-const apiUrl = 'https://nest-users-production.up.railway.app/api/v1';
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export const fetchCategorias = async (): Promise<Categoria[]> => {
   try {

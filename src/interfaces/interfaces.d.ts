@@ -48,6 +48,12 @@
     deletedAt: any
   }
   
+  export interface Anuncios {
+    totalPages: number
+    records: number
+    data: Anuncio[]
+  }
+  
   export interface Anuncio {
     id: number
     titulo: string
@@ -59,10 +65,7 @@
     cod_postal: string
     deletedAt: any
     createdAt: string
-  }
-
-  export interface Anuncios {
-    totalPages: number
-    records: number
-    data: Anuncio[]
+    subcategoria: Subcategoria
+    estado: Estado
+    poblacion: Poblacion
   }

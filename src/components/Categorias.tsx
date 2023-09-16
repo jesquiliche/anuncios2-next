@@ -8,7 +8,7 @@ const Categorias = () => {
 
   const fetchCategorias = async () => {
     // Definimos la URL del endpoint
-    const apiUrl = 'https://nest-users-production.up.railway.app/api/v1/categorias';
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL+'/Categorias';
 
     try {
       // Realizamos la solicitud GET usando fetch y await
