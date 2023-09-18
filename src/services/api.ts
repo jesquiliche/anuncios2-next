@@ -79,7 +79,8 @@ export const fetchAnuncios = async (url:string): Promise<Anuncios> => {
   try {
     const response = await fetch(url);
     if (!response.ok) {
-      throw new Error('La solicitud no pudo completarse con éxito');
+       
+      throw new Error(`${response.status} ${response.statusText}`);
     }
     const data: Anuncios = await response.json();
     return data;

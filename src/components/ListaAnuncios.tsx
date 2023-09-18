@@ -14,7 +14,7 @@ const ListaAnuncios = ({anuncios}:Props) => {
         Anuncios de segunda mano
       </h1>
 
-      <div className="grid grid-cols-3 mt-2 gap-4 h-full pb-10">
+      <div className="grid grid-cols-3 mt-2 gap-4 pb-10">
         {anuncios?.map((a) => (
           <div className="grid-col-1 mb-1 rounded-lg border shadow-lg bg-slate-100 p-2 flex flex-col justify-between">
             <div>
