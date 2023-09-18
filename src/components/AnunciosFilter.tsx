@@ -21,36 +21,106 @@ import {
 const AnunciosFilter: React.FC = () => {
   const [categorias, setCategorias] = useState<Categoria[]>([]);
   const [provincias, setProvincias] = useState<Provincia[]>([]);
-  const [selectedCategoria, setSelectedCategoria] = useState<string>("");
+  
+  const [categoria, setCategoria] = useState("");
+  const [subcategoria, setSubCategoria] = useState("");
+  const [provincia, setProvincia] = useState("");
+  const [poblacion,setPoblacion]=useState("");
+  const [estado,setEstado]=useState("");
+  const [titulo,setTitulo]=useState("");
+
   const [subcategorias, setSubcategorias] = useState<Subcategoria[]>([]);
   const [poblaciones, setPoblaciones] = useState<Poblacion[]>([]);
   const [estados, setEstados] = useState<Estado[]>([]);
-  const [searchText, setSearchText] = useState<string>("");
-  const [startDate, setStartDate] = useState<string>("");
-  const [endDate, setEndDate] = useState<string>("");
   const [anuncios, setAnuncios] = useState<Anuncios>();
+  
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  
+  const apiurl:string=process.env.NEXT_PUBLIC_API_URL ||'http://localhost:4000/api/v1' ;
+  
+  function construirURL() {
+        // Crea una nueva URL
+    
+
+    const url = new URL(apiurl+'/anuncios');
+  
+    // Accede a los estados locales del componente y agrega los parámetros correspondientes a la URL
+    
+    url.searchParams.set('page', '1');
+    url.searchParams.set('limit', '9');
+    
+    if (categoria) {
+      url.searchParams.set('categoria', categoria);
+    }
+  
+    if (subcategoria) {
+      url.searchParams.set('subcategoria', subcategoria);
+    }
+  
+    if (poblacion) {
+      url.searchParams.set('cod_postal', poblacion);
+    }
+    if (provincia) {
+      url.searchParams.set('provincia', provincia);
+    }
+  
+    if (estado) {
+      url.searchParams.set('estado', estado);
+    }
+  
+    if (titulo) {
+      url.searchParams.set('titulo', titulo);
+    }
+  
+    // Devuelve la URL completa como una cadena
+    return url.toString();
+  }
+  
   
   const handleCategoriaChange = async (
     event: ChangeEvent<HTMLSelectElement>
   ) => {
     const selectedValue = event.target.value;
+    const selectedIndex = event.target.selectedIndex; // Índice de la opción seleccionada
+    const selectedText = event.target.options[selectedIndex].text;
+    
+    setCategoria(selectedText)
     setSubcategorias(await fetchSubcategorias(selectedValue));
   };
 
+  
   const handleProvinciasChange = async (
     event: ChangeEvent<HTMLSelectElement>
   ) => {
     const selectedValue = event.target.value;
+    setProvincia(selectedValue);
     setPoblaciones(await fetchPoblaciones(selectedValue));
   };
 
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // Evita que se recargue la página por defecto al enviar el formulario
+
+    //setAnuncios(await fetchAnuncios(apiurl+'/anuncios?limit=10&page=1'))
+    alert(construirURL());
+    
+    setAnuncios(await fetchAnuncios(construirURL()))
+   //alert(categoria +"\n"+subcategoria+"\n"+provincia+"\n"+poblacion+"\n"+estado)
+    // Aquí puedes realizar las acciones que desees con los valores de los campos del formulario, como realizar la búsqueda de anuncios
+    // Por ejemplo:
+    // Realizar una búsqueda de anuncios con los valores de los campos (categoria, subcategoria, provincia, etc.)
+    // Luego, actualiza el estado 'anuncios' con los resultados de la búsqueda
+    // setAnuncios(resultadosDeBusqueda);
+  };
+  
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
         setCategorias(await fetchCategorias());
         setProvincias(await fetchProvincias());
         setEstados(await fetchEstados());
-        setAnuncios(await fetchAnuncios());
+        setAnuncios(await fetchAnuncios(apiurl+'/anuncios?limit=10&page=1'))
       } catch (error) {
         console.error("Error al cargar datos:", error);
       }
@@ -61,12 +131,12 @@ const AnunciosFilter: React.FC = () => {
 
   return (
     <>
-      <div className="grid grid-cols-4 w-11/12 gap-4 mx-auto">
+      <div className="grid grid-cols-4 w-11/12 gap-4 mx-auto py-16">
         <div className="col-span-1 border shadow-lg mt-10 p-5 rounded-lg bg-white">
           <h1 className="text-center text-xl font-bold">
             ¿Qué estás buscando?
           </h1>
-          <form className="items-center space-y-4 mt-4 mb-4">
+          <form  onSubmit={handleSubmit} className="items-center space-y-4 mt-4 mb-4">
             <div>
               <label htmlFor="desdeFecha" className="text-gray-700 font-bold">
                 Desde fecha:
@@ -77,7 +147,7 @@ const AnunciosFilter: React.FC = () => {
                 name="desdeFecha"
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
               />
             </div>
             <div>
@@ -90,7 +160,7 @@ const AnunciosFilter: React.FC = () => {
                 name="hastaFecha"
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
               />
             </div>
             <div>
@@ -100,11 +170,11 @@ const AnunciosFilter: React.FC = () => {
               <select
                 id="categoria"
                 name="categoria"
-                value={selectedCategoria}
+                
                 onChange={handleCategoriaChange}
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
               >
-                <option value="">Selecciona una categoría</option>
+                <option value=""></option>
                 {categorias.map((c) => (
                   <option key={c.id} value={c.id}>
                     {c.nombre}
@@ -119,12 +189,14 @@ const AnunciosFilter: React.FC = () => {
               <select
                 id="subcategoria"
                 name="subcategoria"
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                value={subcategoria}
+                onChange={(e) => setSubCategoria(e.target.value)}
+                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
               >
-                <option value="">Selecciona una Subcategoria</option>
+                <option value=""></option>
                 {subcategorias.length > 0 &&
                   subcategorias.map((s) => (
-                    <option key={s.id} value={s.id}>
+                    <option key={s.id} value={s.nombre}>
                       {s.nombre}
                     </option>
                   ))}
@@ -137,10 +209,11 @@ const AnunciosFilter: React.FC = () => {
               <select
                 id="provincia"
                 name="provincia"
+                value={provincia}
                 onChange={handleProvinciasChange}
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
               >
-                <option value="">Selecciona una provincia</option>
+                <option value=""></option>
                 {provincias.map((p) => (
                   <option key={p.codigo} value={p.codigo}>
                     {p.nombre}
@@ -155,9 +228,11 @@ const AnunciosFilter: React.FC = () => {
               <select
                 id="poblacion"
                 name="poblacion"
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                value={poblacion}
+                onChange={(e) => setPoblacion(e.target.value)}
+                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
               >
-                <option value="">Selecciona una población</option>
+                <option value=""></option>
                 {poblaciones.length > 0 &&
                   poblaciones.map((p) => (
                     <option key={p.codigo} value={p.codigo}>
@@ -173,9 +248,11 @@ const AnunciosFilter: React.FC = () => {
               <select
                 id="estado"
                 name="estado"
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                value={estado}
+                onChange={(e) => setEstado(e.target.value)}
+                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
               >
-                <option value="">Selecciona un estado</option>
+                <option value=""></option>
                 {estados.length > 0 &&
                   estados.map((e) => (
                     <option key={e.id} value={e.titulo}>
@@ -190,11 +267,11 @@ const AnunciosFilter: React.FC = () => {
               </label>
               <input
                 type="text"
-                id="search"
-                name="search"
-                value={searchText}
-                onChange={(e) => setSearchText(e.target.value)}
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                id="titulo"
+                name="titulo"
+                value={titulo}
+                onChange={(e) => setTitulo(e.target.value)}
+                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
               />
             </div>
             <div>

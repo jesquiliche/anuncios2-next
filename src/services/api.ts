@@ -5,6 +5,7 @@ import { Categoria, Subcategoria, Provincia, Poblacion,Estado,Anuncios } from '.
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export const fetchCategorias = async (): Promise<Categoria[]> => {
+  console.log(apiUrl);
   try {
     const response = await fetch(`${apiUrl}/categorias`);
     if (!response.ok) {
@@ -74,16 +75,16 @@ export const fetchEstados = async (): Promise<Estado[]> => {
   }
 };
 
-export const fetchAnuncios = async (): Promise<Anuncios> => {
+export const fetchAnuncios = async (url:string): Promise<Anuncios> => {
   try {
-    const response = await fetch(`${apiUrl}/anuncios?page=1&limit=20`);
+    const response = await fetch(url);
     if (!response.ok) {
       throw new Error('La solicitud no pudo completarse con éxito');
     }
     const data: Anuncios = await response.json();
     return data;
   } catch (error) {
-    console.error('Error al cargar provincias:', error);
+    console.error('Error al cargar Anuncios:', error);
     throw error;
   }
 };

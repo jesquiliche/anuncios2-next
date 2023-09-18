@@ -14,13 +14,14 @@ const ListaAnuncios = ({anuncios}:Props) => {
         Anuncios de segunda mano
       </h1>
 
-      <div className="grid grid-cols-3 mt-2 gap-4 h-full">
+      <div className="grid grid-cols-3 mt-2 gap-4 h-full pb-10">
         {anuncios?.map((a) => (
-          <div className="grid-col-1 mt-2 rounded-lg border shadow-lg bg-slate-100 p-2 flex flex-col justify-between">
+          <div className="grid-col-1 mb-1 rounded-lg border shadow-lg bg-slate-100 p-2 flex flex-col justify-between">
             <div>
               <h1 className="text-1xl text-center font-semibold">{a.subcategoria.nombre}</h1>
               <h1 className="text-1xl text-center font-semibold">{a.precio} €</h1>
               <img
+               
                 src={`${api_images}${a.imagen}`}
                 className="w-full h-40 rounded-lg shadow-md mt-2"
                 alt={a.titulo}
