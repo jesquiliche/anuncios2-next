@@ -107,6 +107,7 @@ const AnunciosFilter: React.FC = () => {
   //Ejecutar Filtro
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Evita que se recargue la página por defecto al enviar el formulario
+    setPage(1);
     setAnuncios(await fetchAnuncios(construirURL()));
   };
 
@@ -128,7 +129,7 @@ const AnunciosFilter: React.FC = () => {
         setCategorias(await fetchCategorias());
         setProvincias(await fetchProvincias());
         setEstados(await fetchEstados());
-        const data=await fetchAnuncios(apiurl + "/anuncios?limit=3&page=1");
+        const data=await fetchAnuncios(apiurl + "/anuncios?limit="+limit.toString()+"&page=1");
         
         await setTotalPages(data.totalPages);
      
@@ -142,6 +143,17 @@ const AnunciosFilter: React.FC = () => {
     fetchData();
   }, []);
 
+
+  //Refresca los anuncios siempre que se cambie de página
+  useEffect(() => {
+       const refrescar= async()=>{
+        const data=await fetchAnuncios(construirURL());
+        setTotalPages(data.totalPages);
+        setAnuncios(data);
+        };
+       refrescar();
+  }, [page]);
+
   const RenderPagination: React.FC = () => {
     return (
       <>
@@ -149,7 +161,7 @@ const AnunciosFilter: React.FC = () => {
         <div className="flex flex-col items-center">
          
           <div className="inline-flex mt-2 xs:mt-0">
-            <button className="flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-gray-800 rounded-l hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+            <button className="flex items-center justify-center px-3 h-8 text-md font-medium text-white bg-gray-500 rounded-l hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
            onClick={retrocedePagina}
            >
               <svg
@@ -167,12 +179,12 @@ const AnunciosFilter: React.FC = () => {
                   d="M13 5H1m0 0 4 4M1 5l4-4"
                 />
               </svg>
-              Prev
+              Anterior
             </button>
             <button
               onClick={avanzaPagina} 
-              className="flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-gray-800 border-0 border-l border-gray-700 rounded-r hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-              Next
+              className="flex items-center justify-center px-3 h-8 text-md font-medium text-white bg-gray-500 border-0 border-l border-gray-700 rounded-r hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+              Siguiente
               <svg
                 className="w-3.5 h-3.5 ml-2"
                 aria-hidden="true"

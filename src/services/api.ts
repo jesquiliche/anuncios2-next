@@ -1,6 +1,6 @@
 // api.ts
 
-import { Categoria, Subcategoria, Provincia, Poblacion,Estado,Anuncios } from '../interfaces/interfaces';
+import { Categoria, Subcategoria, Provincia, Poblacion,Estado,Anuncios,Anuncio } from '../interfaces/interfaces';
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -90,3 +90,16 @@ export const fetchAnuncios = async (url:string): Promise<Anuncios> => {
   }
 };
 
+export const fetchAnunciosById = async (url:string,id:string): Promise<Anuncio> => {
+  try {
+    const response = await fetch(`${url}/${id}`);
+    if (!response.ok) {
+      throw new Error(`${response.status} ${response.statusText}`);
+    }
+    const data: Anuncio = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error al cargar Anuncios:', error);
+    throw error;
+  }
+};
