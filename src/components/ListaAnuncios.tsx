@@ -19,8 +19,9 @@ const ListaAnuncios = ({anuncios}:Props) => {
 
       <div className="grid grid-cols-3 mt-2 gap-4 pb-10">
         {anuncios?.map((a) => (
-          <Link href={`/detalle/${a.id}`}>
-          <div className="grid-col-1 mb-1 rounded-lg border shadow-lg bg-slate-100  p-2 flex flex-col justify-between hover:bg-slate-200">
+          
+          <div  key={a.id} className="grid-col-1 mb-1 rounded-lg border shadow-lg bg-slate-100  p-2 flex flex-col justify-between hover:bg-slate-200">
+           <Link href={`/detalle/${a.id}`}>
             <div>
               <h1 className="text-1xl text-center font-bold">{a.subcategoria.nombre}</h1>
               <h1 className="text-1xl text-center text-red-500 italic font-bold">{a.precio} €</h1>
@@ -35,9 +36,9 @@ const ListaAnuncios = ({anuncios}:Props) => {
               <h1 className="text-1xl text-center font-semibold mt-2">{a.titulo}</h1>
               <h1 className="text-1xl mt-2">{a.description}</h1>
             </div>
-           
+            </Link> 
           </div>
-          </Link>
+          
         ))}
       </div>
     </>

@@ -5,16 +5,16 @@ const NavBar = () => {
     <header>
       <nav className="border-gray-200 dark:bg-gray-900 shadow-lg w-full bg-white fixed">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-          <a href="https://flowbite.com/" className="flex items-center">
+          <Link href="/" className="flex items-center">
             <img
-              src="https://flowbite.com/docs/images/logo.svg"
+              src="/gif-aviso.gif"
               className="h-8 mr-3"
               alt="Flowbite Logo"
             />
             <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
               Anuncios segunda mano
             </span>
-          </a>
+          </Link>
           <button
             data-collapse-toggle="navbar-default"
             type="button"

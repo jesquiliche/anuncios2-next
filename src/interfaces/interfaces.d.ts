@@ -64,8 +64,9 @@
     provincia: string
     cod_postal: string
     deletedAt: any
-    createdAt: string
+    createdAt: Date
     subcategoria: Subcategoria
     estado: Estado
+    user:User
     poblacion: Poblacion
   }

@@ -1,11 +1,23 @@
 "use client";
-import React, {useState,useEffect, ChangeEvent} from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import ListaAnuncios from "./ListaAnuncios";
-import {Subcategoria,Categoria,Provincia,Poblacion,Estado,  Anuncios,
+import {
+  Subcategoria,
+  Categoria,
+  Provincia,
+  Poblacion,
+  Estado,
+  Anuncios,
 } from "@/interfaces/interfaces";
-import {fetchCategorias, fetchProvincias, fetchSubcategorias,
-  fetchPoblaciones,fetchEstados,fetchAnuncios
+import {
+  fetchCategorias,
+  fetchProvincias,
+  fetchSubcategorias,
+  fetchPoblaciones,
+  fetchEstados,
+  fetchAnuncios,
 } from "@/services/api";
+import SearchIcon from "./icons/SearchIcon";
 
 const AnunciosFilter: React.FC = () => {
   //Paginación
@@ -108,7 +120,9 @@ const AnunciosFilter: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Evita que se recargue la página por defecto al enviar el formulario
     setPage(1);
-    setAnuncios(await fetchAnuncios(construirURL()));
+    const data = await fetchAnuncios(construirURL());
+    setTotalPages(data.totalPages);
+    setAnuncios(data);
   };
 
   const retrocedePagina = () => {
@@ -129,12 +143,13 @@ const AnunciosFilter: React.FC = () => {
         setCategorias(await fetchCategorias());
         setProvincias(await fetchProvincias());
         setEstados(await fetchEstados());
-        const data=await fetchAnuncios(apiurl + "/anuncios?limit="+limit.toString()+"&page=1");
-        
+        const data = await fetchAnuncios(
+          apiurl + "/anuncios?limit=" + limit.toString() + "&page=1"
+        );
+
         await setTotalPages(data.totalPages);
-     
+
         setAnuncios(data);
-        
       } catch (error) {
         console.error("Error al cargar datos:", error);
       }
@@ -143,27 +158,29 @@ const AnunciosFilter: React.FC = () => {
     fetchData();
   }, []);
 
-
   //Refresca los anuncios siempre que se cambie de página
   useEffect(() => {
-       const refrescar= async()=>{
-        const data=await fetchAnuncios(construirURL());
-        setTotalPages(data.totalPages);
-        setAnuncios(data);
-        };
-       refrescar();
+    const refrescar = async () => {
+      const data = await fetchAnuncios(construirURL());
+
+      await setTotalPages(data.totalPages);
+      setAnuncios(data);
+    };
+    refrescar();
   }, [page]);
 
   const RenderPagination: React.FC = () => {
     return (
       <>
-        <p className="text-center font-semibold">{page} de {totalPages} </p>
+        <p className="text-center font-semibold">
+          {page} de {totalPages}{" "}
+        </p>
         <div className="flex flex-col items-center">
-         
           <div className="inline-flex mt-2 xs:mt-0">
-            <button className="flex items-center justify-center px-3 h-8 text-md font-medium text-white bg-gray-500 rounded-l hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-           onClick={retrocedePagina}
-           >
+            <button
+              className="flex items-center justify-center px-3 h-8 text-md font-medium text-white bg-gray-500 rounded-l hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+              onClick={retrocedePagina}
+            >
               <svg
                 className="w-3.5 h-3.5 mr-2"
                 aria-hidden="true"
@@ -182,8 +199,9 @@ const AnunciosFilter: React.FC = () => {
               Anterior
             </button>
             <button
-              onClick={avanzaPagina} 
-              className="flex items-center justify-center px-3 h-8 text-md font-medium text-white bg-gray-500 border-0 border-l border-gray-700 rounded-r hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+              onClick={avanzaPagina}
+              className="flex items-center justify-center px-3 h-8 text-md font-medium text-white bg-gray-500 border-0 border-l border-gray-700 rounded-r hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+            >
               Siguiente
               <svg
                 className="w-3.5 h-3.5 ml-2"
@@ -203,7 +221,6 @@ const AnunciosFilter: React.FC = () => {
             </button>
           </div>
         </div>
-        
       </>
     );
   };
@@ -358,16 +375,16 @@ const AnunciosFilter: React.FC = () => {
             <div>
               <button
                 type="submit"
-                className="px-4 mt-6 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:bg-blue-600"
+                className="flex flex-row btn-primary mx-auto"
               >
-                Buscar
+                <SearchIcon className="pr-1"/> Buscar
               </button>
             </div>
           </form>
         </div>
         <div className="col-span-3 border shadow-lg mt-10 p-5 rounded-lg w-full bg-white">
           {anuncios && <ListaAnuncios anuncios={anuncios?.data} />}
-          <RenderPagination/>
+          <RenderPagination />
         </div>
       </div>
     </>
