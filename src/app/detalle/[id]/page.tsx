@@ -5,7 +5,7 @@ import { fetchAnunciosById } from "@/services/api";
 export default async function Detalle({ params }: { params: { id: string } }) {
   const { id } = params;
   const apiUrl =
-    process.env.NEXT_PUBLIC_API_URL || "http://localhost/400/api/v1";
+    process.env.NEXT_PUBLIC_API_URL || "http://localhost/4000/api/v1";
   const api_images = process.env.NEXT_PUBLIC_IMAGES_URL;
 
   const cargaDatos = async () => {

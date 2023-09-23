@@ -42,21 +42,29 @@ const NavBar = () => {
           <div className="hidden w-full md:block md:w-auto" id="navbar-default">
             <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
               <li>
-                <Link href="/"
-                
+                <Link
+                  href="/"
                   className="block py-2 pl-3 pr-4 hover:bg-slate-700 hover:text-white rounded-lg"
                 >
                   Home
                 </Link>
               </li>
-              
               <li>
-                <a
-                  href="#"
+                <Link
+                  href="/register"
                   className="block py-2 pl-3 pr-4 hover:bg-slate-700 hover:text-white rounded-lg"
                 >
-                  Contact
-                </a>
+                  Registrarse
+                </Link>
+              </li>
+
+              <li>
+                <Link 
+                  href="/login"
+                  className="block py-2 pl-3 pr-4 hover:bg-slate-700 hover:text-white rounded-lg"
+                >
+                  Login
+                </Link>
               </li>
             </ul>
           </div>

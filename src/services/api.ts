@@ -103,3 +103,41 @@ export const fetchAnunciosById = async (url:string,id:string): Promise<Anuncio> 
     throw error;
   }
 };
+
+export async function postRegister(url:string,datos: {
+  name: string;
+  primer_apellido: string;
+  segundo_apellido: string;
+  user_name: string;
+  password: string;
+  email: string;
+}) {
+  
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(datos)
+    });
+
+    if (response.ok) {
+     
+      alert('Datos enviados correctamente.');
+      // Aquí puedes realizar acciones adicionales después de enviar los datos
+    } else {
+      switch (response.status) {
+        case 409:
+          throw new Error('Ya existe un Usuario con este email: '+response.statusText);    
+          break;
+        default:
+          throw new Error('Error al enviar los datos:'+response.statusText);
+          break;
+      }
+      
+    }
+  } catch (error) {
+    alert(error);
+  }
+};
