@@ -6,9 +6,8 @@ import ButtonAuth from "@/components/buttonAuth";
 export default function Home() {
   return (
     <main className={styles.main}>
-      
-      
-      <ButtonAuth/>      
+      <AnunciosFilter />
+           
     </main>
   )
 }

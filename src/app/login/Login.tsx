@@ -1,17 +1,20 @@
 'use client'
 import React, { useState } from 'react';
-import { postRegister } from '@/services/api';
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 interface UserData {
     password: string,
     email: string
 }
+
 const Login: React.FC = () => {
+  const [errors, setErrors] = useState<string[]>([]);
   const [userData, setUserData] = useState<UserData>({
     password: '',
     email: '',
   });
-
+ const router=useRouter();
   
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,13 +22,21 @@ const Login: React.FC = () => {
     setUserData({ ...userData, [name]: value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    let apiurl=process.env.NEXT_PUBLIC_API_URL || "http://localhost/400/api/v1";
-    apiurl+='/auth/login'
-    // Aquí puedes enviar los datos del formulario al servidor o realizar alguna acción con ellos
-  //  postRegister(apiurl,userData)
-    console.log('Datos enviados:', userData);
+    const responseNextAuth = await signIn("credentials", {
+      email: userData.email,
+      password: userData.password,
+      redirect: false,
+    });
+
+   if (responseNextAuth?.error) {
+      setErrors(responseNextAuth.error.split(","));
+      return;
+   }
+
+    router.push("/");
+
   };
 
   return (
@@ -63,7 +74,17 @@ const Login: React.FC = () => {
         <button type="submit" className='btn-primary mt-5'>Iniciar sesión</button>
         
       </form>
+      {errors.length > 0 && (
+        <div className="bg-red-100 rounded-lg border mt-5 p-4">
+          <ul className="mb-2">
+            {errors.map((error) => (
+              <li key={error}>{error}</li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
+  
     </div>
   );
 };

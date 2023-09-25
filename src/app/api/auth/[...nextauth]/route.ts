@@ -16,6 +16,7 @@ const handler = NextAuth({
           type: "password",
           placeholder: "3912481Bb",
         },
+        
       },
       async authorize(credentials) {
         const res = await fetch(
@@ -37,6 +38,15 @@ const handler = NextAuth({
       },
     }),
   ],
+  callbacks: {
+    async jwt({ token, user }) {
+      return { ...token, ...user };
+    },
+    async session({ session, token }) {
+      session.user = token as any;
+      return session;
+    },
+  },
 });
 
 export { handler as GET, handler as POST };
