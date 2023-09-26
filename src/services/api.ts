@@ -5,7 +5,7 @@ import { Categoria, Subcategoria, Provincia, Poblacion,Estado,Anuncios,Anuncio }
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export const fetchCategorias = async (): Promise<Categoria[]> => {
-  console.log(apiUrl);
+  
   try {
     const response = await fetch(`${apiUrl}/categorias`);
     if (!response.ok) {
@@ -22,8 +22,9 @@ export const fetchCategorias = async (): Promise<Categoria[]> => {
 export const fetchSubcategorias = async (id: string): Promise<Subcategoria[]> => {
   try {
     const response = await fetch(`${apiUrl}/subcategorias/categoria/${id}`);
+    
     if (!response.ok) {
-      throw new Error('La solicitud no pudo completarse con éxito');
+      throw new Error('Error em la solicitud');
     }
     const data: Subcategoria[] = await response.json();
     return data;

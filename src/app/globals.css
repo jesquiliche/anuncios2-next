@@ -3,11 +3,16 @@
 @tailwind utilities;
 
 body {
-    @apply bg-slate-100
+    background-color: aliceblue;
+    max-width:  1350px;
+    margin: auto;
 }
+
+
   
 .btn-primary {
     @apply bg-gray-500 text-white rounded-md hover:bg-gray-700 px-4 py-2 items-center text-center
+
 }
 
 .btn-primary > * {

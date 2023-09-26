@@ -1,10 +1,14 @@
+"use client";
 import Link from "next/link";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 const NavBar = () => {
+  const { data: session, status } = useSession();
+
   return (
     <header>
-      <nav className="border-gray-200 dark:bg-gray-900 shadow-lg w-full bg-white fixed">
-        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+      <nav className="border-gray-200 dark:bg-gray-900 shadow-lg bg-white mz-auto w-full">
+        <div className="flex flex-wrap items-center justify-between mx-auto p-4">
           <Link href="/" className="flex items-center">
             <img
               src="/gif-aviso.gif"
@@ -40,11 +44,11 @@ const NavBar = () => {
             </svg>
           </button>
           <div className="hidden w-full md:block md:w-auto" id="navbar-default">
-            <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+            <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg md:flex-row md:space-x-4 md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
               <li>
                 <Link
                   href="/"
-                  className="block py-2 pl-3 pr-4 hover:bg-slate-700 hover:text-white rounded-lg"
+                  className="block py-2 px-2 hover:bg-slate-500 hover:text-white rounded-lg"
                 >
                   Home
                 </Link>
@@ -52,18 +56,35 @@ const NavBar = () => {
               <li>
                 <Link
                   href="/register"
-                  className="block py-2 pl-3 pr-4 hover:bg-slate-700 hover:text-white rounded-lg"
+                  className="block py-2 px-2   hover:bg-slate-500 hover:text-white rounded-lg"
                 >
                   Registrarse
                 </Link>
               </li>
 
               <li>
-                <Link 
+                <Link
                   href="/login"
-                  className="block py-2 pl-3 pr-4 hover:bg-slate-700 hover:text-white rounded-lg"
+                  className="block py-2 px-2 hover:bg-slate-500 hover:text-white rounded-lg"
                 >
                   Login
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/add"
+                  className="block py-2 px-2 hover:bg-slate-500 hover:text-white rounded-lg"
+                >
+                  Publicar
+                </Link>
+              </li>
+
+              <li>
+                <Link
+                  href="/"
+                  className="block py-2 px-2 bg-slate-100 hover:bg-slate-500 hover:text-white rounded-lg"
+                >
+                  {session?.user?.email}
                 </Link>
               </li>
             </ul>

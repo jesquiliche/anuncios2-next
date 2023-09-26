@@ -23,7 +23,7 @@ export default async function Detalle({ params }: { params: { id: string } }) {
       <div className="p-20">
         <div className="mt-10 grid grid-cols-2 gap-4 w-4/5 p-8 rounded-lg shadow-lg mx-auto bg-white">
           <div className="col-span-2">
-            <h1 className="text-2xl font-bold mt-3">{anuncio.titulo}</h1>
+            <h1 className="text-xl font-bold mt-3">{anuncio.titulo}</h1>
             <div className="grid grid-cols-2 gap-4 mt-3">
               <div className="border p-2 rounded-lg shadow-lg h-full bg-slate-100">
                 <label className="font-bold">Categoría</label>

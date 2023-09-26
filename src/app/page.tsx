@@ -1,9 +1,14 @@
 import AnunciosFilter from "@/components/AnunciosFilter";
+import { useSession, signIn, signOut } from "next-auth/react"
+
 
 import styles from "./page.module.css";
-import ButtonAuth from "@/components/buttonAuth";
 
-export default function Home() {
+
+export default function Home(){
+ 
+
+  
   return (
     <main className={styles.main}>
       <AnunciosFilter />
