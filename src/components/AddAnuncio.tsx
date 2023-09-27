@@ -15,6 +15,10 @@ import {
   fetchEstados,
 } from "@/services/api";
 
+interface File extends Blob {
+  readonly lastModified: number;
+  readonly name: string;
+}
 export interface AnuncioData {
   titulo: string;
   description: string;
@@ -27,6 +31,7 @@ export interface AnuncioData {
   user: string;
   provincia: string;
   cod_postal: string;
+  file:File |null
 }
 
 const AnunciosAdd: React.FC = () => {
@@ -48,17 +53,32 @@ const AnunciosAdd: React.FC = () => {
     user: "",
     provincia: "",
     cod_postal: "",
+    file:null
   });
 
   const apiurl: string =
     process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api/v1";
 
-  // Controlador de cambio de categoría
+    const handleImagenChange = (event: ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files?.[0]; // Obtener el primer archivo seleccionado
+      if (file) {
+        setAnuncio({
+          ...anuncio,
+          file: file,
+        });
+      }
+    };
+    
+  
+  
+  
+    // Controlador de cambio de categoría
   const handleCategoriaChange = async (event: ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = event.target.value;
     const selectedIndex = event.target.selectedIndex;
     const selectedText = event.target.options[selectedIndex].text;
     
+  
     // Actualizar el estado del anuncio con la categoría seleccionada
     setAnuncio({
       ...anuncio,
@@ -275,6 +295,20 @@ const AnunciosAdd: React.FC = () => {
                   required
                   className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
                 />
+                <div>
+  <label htmlFor="imagen" className="text-gray-700 font-bold">
+    Imagen:
+  </label>
+  <input
+    type="file"
+    id="imagen"
+    name="imagen"
+    accept="image/*" // Para permitir solo archivos de imagen
+    onChange={handleImagenChange}
+    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
+  />
+</div>
+
               </div>
             </div>
           </div>
