@@ -21,6 +21,7 @@ export interface AnuncioData {
   imagen: string;
   precio: number;
   telefono: string;
+  categoria: string;
   subcategoria: string;
   estado: string;
   user: string;
@@ -29,13 +30,7 @@ export interface AnuncioData {
 }
 
 const AnunciosAdd: React.FC = () => {
-  const [categoria, setCategoria] = useState("");
-  const [subcategoria, setSubCategoria] = useState("");
-  const [provincia, setProvincia] = useState("");
-  const [poblacion, setPoblacion] = useState("");
-  const [estado, setEstado] = useState("");
-  const [titulo, setTitulo] = useState("");
-
+  // Estados para rastrear valores del formulario y cargar datos
   const [categorias, setCategorias] = useState<Categoria[]>([]);
   const [provincias, setProvincias] = useState<Provincia[]>([]);
   const [subcategorias, setSubcategorias] = useState<Subcategoria[]>([]);
@@ -47,6 +42,7 @@ const AnunciosAdd: React.FC = () => {
     imagen: "",
     precio: 0,
     telefono: "",
+    categoria: "",
     subcategoria: "",
     estado: "",
     user: "",
@@ -57,32 +53,59 @@ const AnunciosAdd: React.FC = () => {
   const apiurl: string =
     process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api/v1";
 
-  const handleCategoriaChange = async (
-    event: ChangeEvent<HTMLSelectElement>
-  ) => {
+  // Controlador de cambio de categoría
+  const handleCategoriaChange = async (event: ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = event.target.value;
     const selectedIndex = event.target.selectedIndex;
     const selectedText = event.target.options[selectedIndex].text;
-    setCategoria(selectedText);
+    
+    // Actualizar el estado del anuncio con la categoría seleccionada
+    setAnuncio({
+      ...anuncio,
+      categoria: selectedText,
+    });
+
+    // Cargar subcategorías basadas en la categoría seleccionada
     setSubcategorias(await fetchSubcategorias(selectedValue));
   };
 
-  const handleProvinciasChange = async (
-    event: ChangeEvent<HTMLSelectElement>
-  ) => {
+  // Controlador de cambio de provincia
+  const handleProvinciasChange = async (event: ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = event.target.value;
-    setProvincia(selectedValue);
+    
+    // Actualizar el estado del anuncio con la provincia seleccionada
+    setAnuncio({
+      ...anuncio,
+      provincia: selectedValue,
+    });
+
+    // Cargar poblaciones basadas en la provincia seleccionada
     setPoblaciones(await fetchPoblaciones(selectedValue));
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log(anuncio)
+  // Controlador genérico para cambios en los campos del formulario
+  const handleOnChange = async (
+    e: ChangeEvent<HTMLSelectElement | HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    // Actualizar el estado del anuncio según el campo que cambió
+    setAnuncio({
+      ...anuncio,
+      [e.target.name]: e.target.value,
+    });
   };
 
+  // Controlador de envío del formulario
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // Realizar acciones de envío aquí, como enviar datos a través de una API
+    console.log(anuncio);
+  };
+
+  // Cargar datos iniciales cuando el componente se monta
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // Cargar categorías, provincias y estados
         setCategorias(await fetchCategorias());
         setProvincias(await fetchProvincias());
         setEstados(await fetchEstados());
@@ -96,13 +119,13 @@ const AnunciosAdd: React.FC = () => {
 
   return (
     <>
-      <div className="p-20">
+      <div className="p-20 w-full">
         <form
           onSubmit={handleSubmit}
-          className="mt-4 mb-4 w-4/5 py-5 bg-white mx-auto px-4 rounded-lg border shadow-lg"
+          className="mb-4 w-11/12 py-5 bg-white px-4 rounded-lg border shadow-lg   sm:mx-auto"
         >
           <h1 className="text-center text-xl font-bold">Publicar anuncio</h1>
-          <div className="grid grid-cols-2 gap-4 p-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
             <div>
               <div>
                 <label htmlFor="categoria" className="text-gray-700 font-bold">
@@ -134,9 +157,9 @@ const AnunciosAdd: React.FC = () => {
                 <select
                   id="subcategoria"
                   name="subcategoria"
-                  value={subcategoria}
+                  value={anuncio.subcategoria}
                   required
-                  onChange={(e) => setSubCategoria(e.target.value)}
+                  onChange={handleOnChange}
                   className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
                 >
                   <option value=""></option>
@@ -155,7 +178,7 @@ const AnunciosAdd: React.FC = () => {
                 <select
                   id="provincia"
                   name="provincia"
-                  value={provincia}
+                 
                   required
                   onChange={handleProvinciasChange}
                   className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
@@ -173,10 +196,10 @@ const AnunciosAdd: React.FC = () => {
                   Población:
                 </label>
                 <select
-                  id="poblacion"
-                  name="poblacion"
-                  value={poblacion}
-                  onChange={(e) => setPoblacion(e.target.value)}
+                  id="cod_postal"
+                  name="cod_postal"
+                  
+                  onChange={handleOnChange}
                   className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
                 >
                   <option value=""></option>
@@ -197,9 +220,9 @@ const AnunciosAdd: React.FC = () => {
                 <select
                   id="estado"
                   name="estado"
-                  value={estado}
+                  value={anuncio.estado}
                   required
-                  onChange={(e) => setEstado(e.target.value)}
+                  onChange={handleOnChange}
                   className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
                 >
                   <option value=""></option>
@@ -219,9 +242,9 @@ const AnunciosAdd: React.FC = () => {
                   type="text"
                   id="titulo"
                   name="titulo"
-                  value={titulo}
+                  value={anuncio.titulo}
                   required
-                  onChange={(e) => setTitulo(e.target.value)}
+                  onChange={handleOnChange}
                   className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
                 />
               </div>
@@ -233,7 +256,22 @@ const AnunciosAdd: React.FC = () => {
                   type="number"
                   id="precio"
                   name="precio"
-                  value={0}
+                  value={anuncio.precio}
+                  onChange={handleOnChange}
+                  required
+                  className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
+                />
+              </div>
+              <div>
+                <label htmlFor="precio" className="text-gray-700 font-bold">
+                  Telefono:
+                </label>
+                <input
+                  type="telf"
+                  id="telefono"
+                  name="telefono"
+                  value={anuncio.telefono}
+                  onChange={handleOnChange}
                   required
                   className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
                 />
@@ -245,12 +283,13 @@ const AnunciosAdd: React.FC = () => {
               Descripción:
             </label>
             <textarea
-              id="descripcion"
-              name="descripcion"
+              id="description"
+              name="description"
               required
-              value="Eemplo"
+              
+              onChange={handleOnChange}
               className="w-full mx-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
-            >435345</textarea>
+            >{anuncio.description}</textarea>
           </div>
           <div className="mt-10">
             <button type="submit" className="flex flex-row btn-primary mx-auto">
