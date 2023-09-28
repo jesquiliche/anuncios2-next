@@ -1,5 +1,7 @@
-'use client'
+"use client";
 import React, { useState, useEffect, ChangeEvent } from "react";
+import { useSession, signIn, signOut } from "next-auth/react";
+
 import {
   Subcategoria,
   Categoria,
@@ -25,17 +27,17 @@ export interface AnuncioData {
   imagen: string;
   precio: number;
   telefono: string;
-  categoria: string;
   subcategoria: string;
   estado: string;
   user: string;
   provincia: string;
   cod_postal: string;
-  file:File |null
+  file: File | null;
 }
 
 const AnunciosAdd: React.FC = () => {
   // Estados para rastrear valores del formulario y cargar datos
+  const { data: session, status } = useSession();
   const [categorias, setCategorias] = useState<Categoria[]>([]);
   const [provincias, setProvincias] = useState<Provincia[]>([]);
   const [subcategorias, setSubcategorias] = useState<Subcategoria[]>([]);
@@ -47,52 +49,51 @@ const AnunciosAdd: React.FC = () => {
     imagen: "",
     precio: 0,
     telefono: "",
-    categoria: "",
     subcategoria: "",
     estado: "",
     user: "",
     provincia: "",
     cod_postal: "",
-    file:null
+    file: null,
   });
 
   const apiurl: string =
     process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api/v1";
 
-    const handleImagenChange = (event: ChangeEvent<HTMLInputElement>) => {
-      const file = event.target.files?.[0]; // Obtener el primer archivo seleccionado
-      if (file) {
-        setAnuncio({
-          ...anuncio,
-          file: file,
-        });
-      }
-    };
+  const handleImagenChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]; // Obtener el primer archivo seleccionado
     
-  
-  
-  
-    // Controlador de cambio de categoría
-  const handleCategoriaChange = async (event: ChangeEvent<HTMLSelectElement>) => {
+    if (file) {
+       console.log('Archivo seleccionado:', file);
+      setAnuncio({
+        ...anuncio,
+        file: file,
+        imagen:file.name
+      });
+    //  setAnuncio({...anuncio,imagen:file.name})
+    }
+    
+  };
+
+  // Controlador de cambio de categoría
+  const handleCategoriaChange = async (
+    event: ChangeEvent<HTMLSelectElement>
+  ) => {
     const selectedValue = event.target.value;
     const selectedIndex = event.target.selectedIndex;
     const selectedText = event.target.options[selectedIndex].text;
-    
-  
-    // Actualizar el estado del anuncio con la categoría seleccionada
-    setAnuncio({
-      ...anuncio,
-      categoria: selectedText,
-    });
+
 
     // Cargar subcategorías basadas en la categoría seleccionada
     setSubcategorias(await fetchSubcategorias(selectedValue));
   };
 
   // Controlador de cambio de provincia
-  const handleProvinciasChange = async (event: ChangeEvent<HTMLSelectElement>) => {
+  const handleProvinciasChange = async (
+    event: ChangeEvent<HTMLSelectElement>
+  ) => {
     const selectedValue = event.target.value;
-    
+
     // Actualizar el estado del anuncio con la provincia seleccionada
     setAnuncio({
       ...anuncio,
@@ -114,12 +115,61 @@ const AnunciosAdd: React.FC = () => {
     });
   };
 
-  // Controlador de envío del formulario
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // Realizar acciones de envío aquí, como enviar datos a través de una API
-    console.log(anuncio);
-  };
+ // Controlador de envío del formulario
+const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  
+  console.log(anuncio)
+  // Crear un objeto FormData con los datos del formulario
+  const formData = new FormData();
+  formData.append("titulo", anuncio.titulo);
+  formData.append("description", anuncio.description);
+  formData.append("imagen", anuncio.imagen); // Asegúrate de que anuncio.file sea un Blob (archivo) válido
+  formData.append("file", anuncio.file);
+  formData.append("precio", String(anuncio.precio));
+  formData.append("telefono", anuncio.telefono);
+  formData.append("subcategoria", anuncio.subcategoria);
+  formData.append("estado", anuncio.estado);
+  formData.append("user", session?.user?.email);
+  formData.append("provincia", anuncio.provincia);
+  formData.append("cod_postal", anuncio.cod_postal);
+
+  // Obtener todas las claves del FormData
+const keys = Array.from(formData.keys());
+
+// Iterar a través de las claves y obtener los valores correspondientes
+keys.forEach((key) => {
+  const value = formData.get(key);
+  console.log(`Campo: ${key}, Valor: ${value}`);
+})
+
+  try {
+    // Enviar la solicitud POST a tu API
+    const response = await fetch(`${apiurl}/anuncios`, {
+      method: "POST",
+      headers: {
+        // Agregar el encabezado de autorización con el token JWT
+        Authorization: `Bearer ${session?.user?.token}`,
+      },
+      body: formData,
+    });
+
+    if (response.ok) {
+      // La solicitud fue exitosa, puedes manejar la respuesta aquí si es necesario
+      console.log("Solicitud POST exitosa");
+    } else {
+      // La solicitud no fue exitosa, maneja el error aquí
+      const data=await response.json();
+      console.log(data);
+      
+      console.error("Error al enviar la solicitud POST");
+    }
+  } catch (error) {
+    // Manejar errores de red u otros errores aquí
+    alert(error)
+    console.error("Error de red:", error);
+  }
+};
 
   // Cargar datos iniciales cuando el componente se monta
   useEffect(() => {
@@ -156,7 +206,6 @@ const AnunciosAdd: React.FC = () => {
                   name="categoria"
                   required
                   onChange={handleCategoriaChange}
-                  
                   className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
                 >
                   <option value=""></option>
@@ -198,7 +247,6 @@ const AnunciosAdd: React.FC = () => {
                 <select
                   id="provincia"
                   name="provincia"
-                 
                   required
                   onChange={handleProvinciasChange}
                   className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
@@ -218,7 +266,6 @@ const AnunciosAdd: React.FC = () => {
                 <select
                   id="cod_postal"
                   name="cod_postal"
-                  
                   onChange={handleOnChange}
                   className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
                 >
@@ -296,35 +343,46 @@ const AnunciosAdd: React.FC = () => {
                   className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
                 />
                 <div>
-  <label htmlFor="imagen" className="text-gray-700 font-bold">
-    Imagen:
-  </label>
-  <input
-    type="file"
-    id="imagen"
-    name="imagen"
-    accept="image/*" // Para permitir solo archivos de imagen
-    onChange={handleImagenChange}
-    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
-  />
-</div>
-
+                  <label htmlFor="imagen" className="text-gray-700 font-bold">
+                    Imagen:
+                  </label>
+                  <input
+                    type="file"
+                    id="file"
+                    name="file"
+                    accept="image/*" // Para permitir solo archivos de imagen
+                    required
+                    onChange={handleImagenChange}
+                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
+                  />
+                </div>
               </div>
             </div>
           </div>
           <div>
-            <label htmlFor="descripcion" className="mx-4 text-gray-700 font-bold">
+            <label
+              htmlFor="descripcion"
+              className="mx-4 text-gray-700 font-bold"
+            >
               Descripción:
             </label>
             <textarea
               id="description"
               name="description"
               required
-              
               onChange={handleOnChange}
               className="w-full mx-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
-            >{anuncio.description}</textarea>
+            >
+              {anuncio.description}
+            </textarea>
           </div>
+          <img
+            id="image-preview"
+            src=""
+            alt="Vista previa de la imagen"
+            style={{ display: "none", maxWidth: "100%" }}
+          />
+
           <div className="mt-10">
             <button type="submit" className="flex flex-row btn-primary mx-auto">
               Enviar

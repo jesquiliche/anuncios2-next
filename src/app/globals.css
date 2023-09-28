@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-    background-color: aliceblue;
+    background-color: whitesmoke;
     max-width:  1350px;
     margin: auto;
 }

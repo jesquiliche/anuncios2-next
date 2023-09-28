@@ -62,14 +62,28 @@ const NavBar = () => {
                 </Link>
               </li>
 
-              <li>
-                <Link
-                  href="/login"
-                  className="block py-2 px-2 hover:bg-slate-500 hover:text-white rounded-lg"
-                >
-                  Login
-                </Link>
-              </li>
+              
+              {session ? (
+                <li>
+                  <button
+                    onClick={() => signOut()}
+                    className="block py-2 px-2 hover:bg-slate-500 hover:text-white rounded-lg"
+                  >
+                    Logout
+                  </button>
+                </li>
+              ) : (
+                <li>
+                  <Link
+                    href="/login"
+                    className="block py-2 px-2 hover:bg-slate-500 hover:text-white rounded-lg"
+                  >
+                    Login
+                  </Link>
+                </li>
+              )}
+
+              
               <li>
                 <Link
                   href="/add"
@@ -84,7 +98,7 @@ const NavBar = () => {
                   href="/"
                   className="block py-2 px-2 bg-slate-100 hover:bg-slate-500 hover:text-white rounded-lg"
                 >
-                  {session?.user?.email}
+                  {session?.user?.email} - {session?.expires}
                 </Link>
               </li>
             </ul>

@@ -228,7 +228,7 @@ const AnunciosFilter: React.FC = () => {
   return (
     <>
       <div className="grid grid-cols-4 w-11/12 gap-4 mx-auto py-16">
-        <div className="col-span-1 border shadow-lg mt-10 p-5 rounded-lg bg-white">
+        <div className="col-span-1 border shadow-lg p-5 rounded-lg bg-white">
           <h1 className="text-center text-xl font-bold">
             ¿Qué estás buscando?
           </h1>
@@ -382,7 +382,7 @@ const AnunciosFilter: React.FC = () => {
             </div>
           </form>
         </div>
-        <div className="col-span-3 border shadow-lg mt-10 p-5 rounded-lg w-full bg-white">
+        <div className="col-span-3 border shadow-lg p-5 rounded-lg w-full bg-white">
           {anuncios && <ListaAnuncios anuncios={anuncios?.data} />}
           <RenderPagination />
         </div>
