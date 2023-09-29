@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, ChangeEvent } from "react";
+import React, { useState, useEffect, ChangeEvent, useRef } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 
 import {
@@ -37,6 +37,9 @@ export interface AnuncioData {
 
 const AnunciosAdd: React.FC = () => {
   // Estados para rastrear valores del formulario y cargar datos
+  const [error, setError] = useState("");
+  const [ok, setOk] = useState("");
+  const formRef: React.RefObject<HTMLFormElement> = useRef(null);
   const { data: session, status } = useSession();
   const [categorias, setCategorias] = useState<Categoria[]>([]);
   const [provincias, setProvincias] = useState<Provincia[]>([]);
@@ -62,17 +65,16 @@ const AnunciosAdd: React.FC = () => {
 
   const handleImagenChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]; // Obtener el primer archivo seleccionado
-    
+
     if (file) {
-       console.log('Archivo seleccionado:', file);
+      console.log("Archivo seleccionado:", file);
       setAnuncio({
         ...anuncio,
         file: file,
-        imagen:file.name
+        imagen: file.name,
       });
-    //  setAnuncio({...anuncio,imagen:file.name})
+      //  setAnuncio({...anuncio,imagen:file.name})
     }
-    
   };
 
   // Controlador de cambio de categoría
@@ -80,9 +82,8 @@ const AnunciosAdd: React.FC = () => {
     event: ChangeEvent<HTMLSelectElement>
   ) => {
     const selectedValue = event.target.value;
-    const selectedIndex = event.target.selectedIndex;
-    const selectedText = event.target.options[selectedIndex].text;
-
+    // const selectedIndex = event.target.selectedIndex;
+    // const selectedText = event.target.options[selectedIndex].text;
 
     // Cargar subcategorías basadas en la categoría seleccionada
     setSubcategorias(await fetchSubcategorias(selectedValue));
@@ -115,61 +116,81 @@ const AnunciosAdd: React.FC = () => {
     });
   };
 
- // Controlador de envío del formulario
-const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
-  
-  console.log(anuncio)
-  // Crear un objeto FormData con los datos del formulario
-  const formData = new FormData();
-  formData.append("titulo", anuncio.titulo);
-  formData.append("description", anuncio.description);
-  formData.append("imagen", anuncio.imagen); // Asegúrate de que anuncio.file sea un Blob (archivo) válido
-  formData.append("file", anuncio.file);
-  formData.append("precio", String(anuncio.precio));
-  formData.append("telefono", anuncio.telefono);
-  formData.append("subcategoria", anuncio.subcategoria);
-  formData.append("estado", anuncio.estado);
-  formData.append("user", session?.user?.email);
-  formData.append("provincia", anuncio.provincia);
-  formData.append("cod_postal", anuncio.cod_postal);
+  // Controlador de envío del formulario
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-  // Obtener todas las claves del FormData
-const keys = Array.from(formData.keys());
-
-// Iterar a través de las claves y obtener los valores correspondientes
-keys.forEach((key) => {
-  const value = formData.get(key);
-  console.log(`Campo: ${key}, Valor: ${value}`);
-})
-
-  try {
-    // Enviar la solicitud POST a tu API
-    const response = await fetch(`${apiurl}/anuncios`, {
-      method: "POST",
-      headers: {
-        // Agregar el encabezado de autorización con el token JWT
-        Authorization: `Bearer ${session?.user?.token}`,
-      },
-      body: formData,
-    });
-
-    if (response.ok) {
-      // La solicitud fue exitosa, puedes manejar la respuesta aquí si es necesario
-      console.log("Solicitud POST exitosa");
-    } else {
-      // La solicitud no fue exitosa, maneja el error aquí
-      const data=await response.json();
-      console.log(data);
-      
-      console.error("Error al enviar la solicitud POST");
+    setError("");
+    setOk("");
+    // Crear un objeto FormData con los datos del formulario
+    const formData = new FormData();
+    formData.append("titulo", anuncio.titulo);
+    formData.append("description", anuncio.description);
+    if (anuncio.file) {
+      formData.append("imagen", anuncio.imagen);
+      formData.append("file", anuncio.file);
     }
-  } catch (error) {
-    // Manejar errores de red u otros errores aquí
-    alert(error)
-    console.error("Error de red:", error);
-  }
-};
+    formData.append("precio", String(anuncio.precio));
+    formData.append("telefono", anuncio.telefono);
+    formData.append("subcategoria", anuncio.subcategoria);
+    formData.append("estado", anuncio.estado);
+    if (session?.user?.email) {
+      formData.append("user", session.user.email);
+    }
+    formData.append("provincia", anuncio.provincia);
+    formData.append("cod_postal", anuncio.cod_postal);
+
+    // Obtener todas las claves del FormData
+    /*  const keys = Array.from(formData.keys());
+
+    // Iterar a través de las claves y obtener los valores correspondientes
+    keys.forEach((key) => {
+      const value = formData.get(key);
+      console.log(`Campo: ${key}, Valor: ${value}`);
+    });*/
+
+    try {
+      // Enviar la solicitud POST a tu API
+      const token = session?.user?.token || ''; // Si session, user o token son null o undefined, asigna una cadena vacía '' como valor predeterminado.
+
+
+      const response = await fetch(`${apiurl}/anuncios`, {
+        method: "POST",
+        headers: {
+          // Agregar el encabezado de autorización con el token JWT
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      });
+
+      if (response.ok) {
+        // La solicitud fue exitosa, puedes manejar la respuesta aquí si es necesario
+        setOk("Anuncio publicado correctamente");
+        formRef?.current?.reset();
+        resetValues();
+      } else {
+        // La solicitud no fue exitosa, maneja el error aquí
+        const dataError = await response.json();
+        setError(dataError.message[0]);
+      }
+    } catch (error) {
+      // Manejar errores de red u otros errores aquí
+      alert(error);
+      console.error("Error de red:", error);
+    }
+  };
+
+  const resetValues = () => {
+    setAnuncio({
+      ...anuncio,
+      precio: 0,
+      titulo: "",
+      subcategoria: "",
+      estado: "",
+      description: "",
+      telefono: "",
+    });
+  };
 
   // Cargar datos iniciales cuando el componente se monta
   useEffect(() => {
@@ -191,10 +212,21 @@ keys.forEach((key) => {
     <>
       <div className="p-20 w-full">
         <form
+          ref={formRef}
           onSubmit={handleSubmit}
           className="mb-4 w-11/12 py-5 bg-white px-4 rounded-lg border shadow-lg   sm:mx-auto"
         >
           <h1 className="text-center text-xl font-bold">Publicar anuncio</h1>
+          {ok && (
+            <div className="w-3/5 mt-2 mx-auto p-4 bg-green-100 border rounded-lg">
+              {ok}
+            </div>
+          )}
+          {error && (
+            <div className="w-3/5 mt-2 mx-auto p-4 bg-red-100 border rounded-lg">
+              {error}
+            </div>
+          )}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
             <div>
               <div>
@@ -323,6 +355,8 @@ keys.forEach((key) => {
                   type="number"
                   id="precio"
                   name="precio"
+                  min="1"
+                  max="1000000"
                   value={anuncio.precio}
                   onChange={handleOnChange}
                   required
@@ -369,6 +403,7 @@ keys.forEach((key) => {
             <textarea
               id="description"
               name="description"
+              minLength={10}
               required
               onChange={handleOnChange}
               className="w-full mx-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
