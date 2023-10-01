@@ -37,6 +37,7 @@ export interface AnuncioData {
 
 const AnunciosAdd: React.FC = () => {
   // Estados para rastrear valores del formulario y cargar datos
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [error, setError] = useState("");
   const [ok, setOk] = useState("");
   const formRef: React.RefObject<HTMLFormElement> = useRef(null);
@@ -64,16 +65,21 @@ const AnunciosAdd: React.FC = () => {
     process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api/v1";
 
   const handleImagenChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]; // Obtener el primer archivo seleccionado
+    const file = event.target.files?.[0];
 
     if (file) {
       console.log("Archivo seleccionado:", file);
+
+      // Crear una URL de objeto para la vista previa de la imagen
+      const imageUrl = URL.createObjectURL(file);
+      console.log(imageUrl);
+      setImagePreview(imageUrl);
+
       setAnuncio({
         ...anuncio,
         file: file,
         imagen: file.name,
       });
-      //  setAnuncio({...anuncio,imagen:file.name})
     }
   };
 
@@ -151,8 +157,7 @@ const AnunciosAdd: React.FC = () => {
 
     try {
       // Enviar la solicitud POST a tu API
-      const token = session?.user?.token || ''; // Si session, user o token son null o undefined, asigna una cadena vacía '' como valor predeterminado.
-
+      const token = session?.user?.token || ""; // Si session, user o token son null o undefined, asigna una cadena vacía '' como valor predeterminado.
 
       const response = await fetch(`${apiurl}/anuncios`, {
         method: "POST",
@@ -413,9 +418,13 @@ const AnunciosAdd: React.FC = () => {
           </div>
           <img
             id="image-preview"
-            src=""
+            src={imagePreview || ""}
             alt="Vista previa de la imagen"
-            style={{ display: "none", maxWidth: "100%" }}
+            style={{
+              display: imagePreview ? "block" : "none",
+              maxWidth: "100%",
+              margin: "0 auto",
+            }}
           />
 
           <div className="mt-10">

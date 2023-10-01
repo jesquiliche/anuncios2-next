@@ -22,7 +22,7 @@ import SearchIcon from "./icons/SearchIcon";
 const AnunciosFilter: React.FC = () => {
   //Paginación
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(3);
+  const [limit, setLimit] = useState(9);
   const [totalPages, setTotalPages] = useState(0);
 
   //Campos utilizados para los valores de búsqueda
@@ -61,6 +61,7 @@ const AnunciosFilter: React.FC = () => {
     if (startDate) {
       url.searchParams.set("fecha_desde", startDate);
     }
+    //alert(startDate)
 
     if (endDate) {
       url.searchParams.set("fecha_hasta", endDate);
@@ -236,7 +237,7 @@ const AnunciosFilter: React.FC = () => {
             onSubmit={handleSubmit}
             className="items-center space-y-4 mt-4 mb-4"
           >
-            <div>
+          {/*  <div>
               <label htmlFor="desdeFecha" className="text-gray-700 font-bold">
                 Desde fecha:
               </label>
@@ -245,7 +246,10 @@ const AnunciosFilter: React.FC = () => {
                 id="desdeFecha"
                 name="desdeFecha"
                 value={startDate}
-                onChange={(e) => setStartDate(e.target.value)}
+                onChange={(e) => {setStartDate(e.target.value)
+                  alert(e.target.value)}
+                  
+                }
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
               />
             </div>
@@ -262,6 +266,7 @@ const AnunciosFilter: React.FC = () => {
                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
               />
             </div>
+              */}
             <div>
               <label htmlFor="categoria" className="text-gray-700 font-bold">
                 Categoría:

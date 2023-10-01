@@ -78,7 +78,7 @@ export const fetchEstados = async (): Promise<Estado[]> => {
 
 export const fetchAnuncios = async (url:string): Promise<Anuncios> => {
   try {
-    const response = await fetch(url);
+    const response = await fetch(url,{ cache: 'no-store'});
     if (!response.ok) {
        
       throw new Error(`${response.status} ${response.statusText}`);
