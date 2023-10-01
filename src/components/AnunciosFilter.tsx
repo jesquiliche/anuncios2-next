@@ -1,5 +1,7 @@
 "use client";
+import { useSession } from "next-auth/react";
 import React, { useState, useEffect, ChangeEvent } from "react";
+import Link from "next/link";
 import ListaAnuncios from "./ListaAnuncios";
 import {
   Subcategoria,
@@ -20,6 +22,9 @@ import {
 import SearchIcon from "./icons/SearchIcon";
 
 const AnunciosFilter: React.FC = () => {
+  const api_images = process.env.NEXT_PUBLIC_IMAGES_URL;
+  const { data: session } = useSession();
+
   //Paginación
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(9);
@@ -228,8 +233,8 @@ const AnunciosFilter: React.FC = () => {
 
   return (
     <>
-      <div className="grid grid-cols-4 w-11/12 gap-4 mx-auto py-16">
-        <div className="col-span-1 border shadow-lg p-5 rounded-lg bg-white">
+      <div className="grid grid-cols-5 container gap-4 mx-auto py-16">
+        <div className="col-span-1 border shadow-lg p-4 rounded-lg bg-white">
           <h1 className="text-center text-xl font-bold">
             ¿Qué estás buscando?
           </h1>
@@ -237,7 +242,7 @@ const AnunciosFilter: React.FC = () => {
             onSubmit={handleSubmit}
             className="items-center space-y-4 mt-4 mb-4"
           >
-          {/*  <div>
+            {/*  <div>
               <label htmlFor="desdeFecha" className="text-gray-700 font-bold">
                 Desde fecha:
               </label>
@@ -382,13 +387,47 @@ const AnunciosFilter: React.FC = () => {
                 type="submit"
                 className="flex flex-row btn-primary mx-auto"
               >
-                <SearchIcon className="pr-1"/> Buscar
+                <SearchIcon className="pr-1" /> Buscar
               </button>
             </div>
           </form>
         </div>
-        <div className="col-span-3 border shadow-lg p-5 rounded-lg w-full bg-white">
-          {anuncios && <ListaAnuncios anuncios={anuncios?.data} />}
+        <div className="col-span-4 border shadow-lg p-5 rounded-lg w-full bg-white">
+          <div className="grid grid-cols-4 gap-4">
+          {anuncios &&
+            anuncios?.data.map((a) => (
+              <div
+                key={a.id}
+                className="grid-col-1 mb-1 rounded-lg border shadow-lg bg-slate-100  p-2 flex flex-col justify-between hover:bg-slate-200"
+              >
+                <Link href={`/detalle/${a.id}`}>
+                  <div>
+                    <h1 className="text-1xl text-center font-bold">
+                      {a.subcategoria.nombre}
+                    </h1>
+                    <h1 className="text-1xl text-center text-red-500 italic font-bold">
+                      {a.precio} €
+                    </h1>
+
+                    <img
+                      src={`${api_images}${a.imagen}`}
+                      className="w-full  rounded-lg shadow-md mt-2"
+                      alt={a.titulo}
+                    />
+                    {/*<h1 className="text-1xl text-center font-bold mt-2">{a.poblacion.nombre}</h1>*/}
+                    <h1 className="text-md text-center font-semibold mt-2">
+                      {a.titulo}
+                    </h1>
+                    <h1 className="text-1xl mt-2">{a.description.substring(0,20)}</h1>
+                  </div>
+                </Link>
+                {session && (<div className="flex justify-between mt-2">
+                <button className="btn-primary w-full m-1 text-md">Borrar</button>
+                <button className="btn-primary w-full m-1 text-md">Editar</button>
+                </div>)}
+              </div>
+            ))}
+            </div>
           <RenderPagination />
         </div>
       </div>

@@ -98,7 +98,7 @@ const NavBar = () => {
                   href="/"
                   className="block py-2 px-2 bg-slate-100 hover:bg-slate-500 hover:text-white rounded-lg"
                 >
-                  {session?.user?.email} - {session?.expires}
+                  {session?.user?.email}
                 </Link>
               </li>
             </ul>
