@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, useEffect, ChangeEvent, useRef } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
-
 import {
   Subcategoria,
   Categoria,
@@ -177,6 +176,7 @@ const AnunciosAdd: React.FC = () => {
         // La solicitud no fue exitosa, maneja el error aquí
         const dataError = await response.json();
         setError(dataError.message[0]);
+        console.log(dataError);
       }
     } catch (error) {
       // Manejar errores de red u otros errores aquí
@@ -195,8 +195,16 @@ const AnunciosAdd: React.FC = () => {
       description: "",
       telefono: "",
     });
+    setImagePreview(null);
   };
 
+  const closeOkMessage = () => {
+    setOk('');
+  };
+
+  const closeErrorMessage = () => {
+    setError('');
+  };
   // Cargar datos iniciales cuando el componente se monta
   useEffect(() => {
     const fetchData = async () => {
@@ -222,16 +230,6 @@ const AnunciosAdd: React.FC = () => {
           className="mb-4 w-11/12 py-5 bg-white px-4 rounded-lg border shadow-lg   sm:mx-auto"
         >
           <h1 className="text-center text-xl font-bold">Publicar anuncio</h1>
-          {ok && (
-            <div className="w-3/5 mt-2 mx-auto p-4 bg-green-100 border rounded-lg">
-              {ok}
-            </div>
-          )}
-          {error && (
-            <div className="w-3/5 mt-2 mx-auto p-4 bg-red-100 border rounded-lg">
-              {error}
-            </div>
-          )}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
             <div>
               <div>
@@ -426,7 +424,28 @@ const AnunciosAdd: React.FC = () => {
               margin: "0 auto",
             }}
           />
-
+          {ok && (
+        <div className="flex justify-between w-3/5 mt-2 mx-auto p-4 bg-green-100 border rounded-lg">
+          {ok}
+          <button
+            onClick={closeOkMessage}
+            className="ml-2 text-red-500 hover:text-red-700"
+          >
+            Cerrar
+          </button>
+        </div>
+      )}
+      {error && (
+        <div className="flex justify-between w-3/5 mt-2 mx-auto p-4 bg-red-100 border rounded-lg">
+          {error}
+          <button
+            onClick={closeErrorMessage}
+            className="ml-2 text-red-500 hover:text-red-700"
+          >
+            Cerrar
+          </button>
+        </div>
+      )}
           <div className="mt-10">
             <button type="submit" className="flex flex-row btn-primary mx-auto">
               Enviar
