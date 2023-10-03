@@ -27,7 +27,7 @@ const AnunciosFilter: React.FC = () => {
 
   //Paginación
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(9);
+  const [limit, setLimit] = useState(8);
   const [totalPages, setTotalPages] = useState(0);
 
   //Campos utilizados para los valores de búsqueda
@@ -213,10 +213,10 @@ const AnunciosFilter: React.FC = () => {
   const RenderPagination: React.FC = () => {
     return (
       <>
-        <p className="text-center font-semibold">
+        <h4 className="text-center font-semibold">
           {page} de {totalPages}{" "}
-        </p>
-        <div className="flex flex-col items-center">
+        </h4>
+        <div className="flex flex-col items-center mb-2">
           <div className="inline-flex mt-2 xs:mt-0">
             <button
               className="flex items-center justify-center px-3 h-8 text-md font-medium text-white bg-gray-500 rounded-l hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
@@ -428,7 +428,8 @@ const AnunciosFilter: React.FC = () => {
           </form>
         </div>
         <div className="col-span-4 border shadow-lg p-5 rounded-lg w-full bg-white">
-          <div className="grid grid-cols-4 gap-4">
+          <RenderPagination />
+          <div className="grid grid-cols-4 gap-4 mt-2">
             {anuncios &&
               anuncios?.data.map((a) => (
                 <div
@@ -473,7 +474,6 @@ const AnunciosFilter: React.FC = () => {
                 </div>
               ))}
           </div>
-          <RenderPagination />
         </div>
       </div>
     </>
