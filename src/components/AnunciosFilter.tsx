@@ -165,10 +165,17 @@ const AnunciosFilter: React.FC = () => {
   }, []);
 
   // Función para manejar la eliminación de un anuncio
-  const handleBorrarAnuncio = async (id:Number) => {
+  const handleBorrarAnuncio = async (id: Number) => {
     try {
-      const token=session?.user.token
-      const response = await fetch(apiurl+`/anuncios/${id}`, {
+      const confirmarBorrado = window.confirm(
+        "¿Estás seguro de que quieres borrar este anuncio?"
+      );
+      if (!confirmarBorrado) {
+        // Si el usuario confirma, ejecuta la eliminación
+        return;
+      }
+      const token = session?.user.token;
+      const response = await fetch(apiurl + `/anuncios/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`, // Utiliza el token JWT de la sesión
@@ -182,12 +189,12 @@ const AnunciosFilter: React.FC = () => {
       } else {
         // Maneja el caso en que la eliminación no sea exitosa
         console.error("Error al eliminar el anuncio");
-        const msg=await response.json()
-        console.log(msg)
+        const msg = await response.json();
+        console.log(msg);
         alert(msg);
       }
     } catch (error) {
-      alert(error)
+      alert(error);
       console.error("Error al eliminar el anuncio:", error);
     }
   };
@@ -421,54 +428,56 @@ const AnunciosFilter: React.FC = () => {
           </form>
         </div>
         <div className="col-span-4 border shadow-lg p-5 rounded-lg w-full bg-white">
-  <div className="grid grid-cols-4 gap-4">
-    {anuncios &&
-      anuncios?.data.map((a) => (
-        <div
-          key={a.id}
-          className="grid-col-1 mb-1 rounded-lg border shadow-lg bg-slate-100  p-2 flex flex-col justify-between hover:bg-slate-200"
-        >
-          <Link href={`/detalle/${a.id}`}>
-            <div>
-              <h1 className="text-1xl text-center font-bold">
-                {a.subcategoria.nombre}
-              </h1>
-              <h1 className="text-1xl text-center text-red-500 italic font-bold">
-                {a.precio} €
-              </h1>
-              <img
-                src={`${api_images}${a.imagen}`}
-                className="w-full  rounded-lg shadow-md mt-2"
-                alt={a.titulo}
-              />
-              {/*<h1 className="text-1xl text-center font-bold mt-2">{a.poblacion.nombre}</h1>*/}
-              <h1 className="text-md text-center font-semibold mt-2">
-                {a.titulo}
-              </h1>
-              <h1 className="text-1xl mt-2">{a.description.substring(0, 20)}</h1>
-            </div>
-          </Link>
-          {session && (
-            <div className="flex justify-between mt-2">
-              <button
-                onClick={() => handleBorrarAnuncio(a.id)} // Llama a la función de eliminación al hacer clic en el botón
-                className="btn-primary w-full m-1 text-md"
-              >
-                Borrar
-              </button>
-              <button className="btn-primary w-full m-1 text-md">Editar</button>
-            </div>
-          )}
+          <div className="grid grid-cols-4 gap-4">
+            {anuncios &&
+              anuncios?.data.map((a) => (
+                <div
+                  key={a.id}
+                  className="grid-col-1 mb-1 rounded-lg border shadow-lg bg-slate-100  p-2 flex flex-col justify-between hover:bg-slate-200"
+                >
+                  <Link href={`/detalle/${a.id}`}>
+                    <div>
+                      <h1 className="text-1xl text-center font-bold">
+                        {a.subcategoria.nombre}
+                      </h1>
+                      <h1 className="text-1xl text-center text-red-500 italic font-bold">
+                        {a.precio} €
+                      </h1>
+                      <img
+                        src={`${api_images}${a.imagen}`}
+                        className="w-full  rounded-lg shadow-md mt-2"
+                        alt={a.titulo}
+                      />
+                      {/*<h1 className="text-1xl text-center font-bold mt-2">{a.poblacion.nombre}</h1>*/}
+                      <h1 className="text-md text-center font-semibold mt-2">
+                        {a.titulo}
+                      </h1>
+                      <h1 className="text-1xl mt-2">
+                        {a.description.substring(0, 20)}
+                      </h1>
+                    </div>
+                  </Link>
+                  {session && (
+                    <div className="flex justify-between mt-2">
+                      <button
+                        onClick={() => handleBorrarAnuncio(a.id)} // Llama a la función de eliminación al hacer clic en el botón
+                        className="btn-primary w-full m-1 text-md"
+                      >
+                        Borrar
+                      </button>
+                      <button className="btn-primary w-full m-1 text-md">
+                        Editar
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ))}
+          </div>
+          <RenderPagination />
         </div>
-      ))}
-  </div>
-  <RenderPagination />
-</div>
-
       </div>
     </>
   );
-  
 };
 
 export default AnunciosFilter;
