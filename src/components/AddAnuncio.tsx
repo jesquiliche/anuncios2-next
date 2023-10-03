@@ -15,6 +15,7 @@ import {
   fetchPoblaciones,
   fetchEstados,
 } from "@/services/api";
+import Link from "next/link";
 
 interface File extends Blob {
   readonly lastModified: number;
@@ -446,10 +447,13 @@ const AnunciosAdd: React.FC = () => {
           </button>
         </div>
       )}
-          <div className="mt-10">
-            <button type="submit" className="flex flex-row btn-primary mx-auto">
-              Enviar
+          <div className="flex mt-10 mx-auto w-1/5">
+            <button type="submit" className="-row btn-primary mx-auto">
+              Añadir
             </button>
+            <Link href="/" className="btn-primary mx-auto">
+              Volver
+            </Link>
           </div>
         </form>
       </div>
