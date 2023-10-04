@@ -1,7 +1,7 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import NavBar from '../components/NavBar';
+import ResponsiveMenu from '../components/navigation';
 import SessionAuthProvider from '@/context/SessionAuthProvider';
 
 const inter = Inter({ subsets: ['latin'] })
@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="es">
       <body className={inter.className}>
       <SessionAuthProvider>
-        <NavBar/>
+        <ResponsiveMenu/>
         
         {children}
         </SessionAuthProvider>

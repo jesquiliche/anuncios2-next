@@ -32,3 +32,11 @@ body {
 .form-control {
     @apply py-1 border-2  border-gray-300 w-full px-4 rounded-xl focus:outline-none focus:ring focus:border-gray-700
 }
+
+.nav-link {
+    @apply text-gray-800 hover:bg-gray-700 hover:text-white px-2 py-1 rounded-md  font-medium
+}
+
+.nav-link-small {
+    @apply text-gray-800 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium
+}

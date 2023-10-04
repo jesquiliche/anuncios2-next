@@ -205,9 +205,9 @@ const AnunciosAdd: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       if(!session) {
-    
-        router.push('/login');
-        //return(<div>Login</div>);
+        const urlWithoutParam = '/login';
+        // Realizar la redirección a la URL sin el parámetro
+        router.push(urlWithoutParam);
       }
       try {
        
