@@ -1,12 +1,19 @@
 "use client";
 import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/react";
+import { useRouter } from 'next/navigation'
 
 const NavBar = () => {
   const { data: session, status } = useSession();
+  const router = useRouter();
+
+  const cierraSesion = () => {
+    signOut({ redirect: false });
+    router.push("/");
+  };
 
   return (
-    <header>
+    <header className="fixed w-full">
       <nav className="border-gray-200 dark:bg-gray-900 shadow-lg bg-white mz-auto w-full">
         <div className="flex flex-wrap items-center justify-between mx-auto p-4">
           <Link href="/" className="flex items-center">
@@ -22,8 +29,7 @@ const NavBar = () => {
           <button
             data-collapse-toggle="navbar-default"
             type="button"
-            className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-            aria-controls="navbar-default"
+            className="inline-flex items-censpan"
             aria-expanded="false"
           >
             <span className="sr-only">Open main menu</span>
@@ -62,32 +68,28 @@ const NavBar = () => {
                 </Link>
               </li>
 
-              
-              {session ? (
-                <li>
-                  <button
-                    onClick={() => signOut()}
-                    className="block py-2 px-2 hover:bg-slate-500 hover:text-white rounded-lg"
-                  >
-                    Logout
-                  </button>
-                </li>
-              ) : (
-                <li>
-                  <Link
-                    href="/login"
-                    className="block py-2 px-2 hover:bg-slate-500 hover:text-white rounded-lg"
-                  >
-                    Login
-                  </Link>
-                </li>
-              )}
+              <li>
+                <button
+                  onClick={cierraSesion}
+                  className="block py-2 px-2 hover:bg-slate-500 hover:text-white rounded-lg"
+                >
+                  Logout
+                </button>
+              </li>
 
-              
+              <li>
+                <Link
+                  href="/login"
+                  className="block py-2 px-2 hover-bg-slate-500 hover-text-white rounded-lg"
+                >
+                  Login
+                </Link>
+              </li>
+
               <li>
                 <Link
                   href="/add"
-                  className="block py-2 px-2 hover:bg-slate-500 hover:text-white rounded-lg"
+                  className="block py-2 px-2 hover-bg-slate-500 hover-text-white rounded-lg"
                 >
                   Publicar
                 </Link>
@@ -96,7 +98,7 @@ const NavBar = () => {
               <li>
                 <Link
                   href="/"
-                  className="block py-2 px-2 bg-slate-100 hover:bg-slate-500 hover:text-white rounded-lg"
+                  className="block py-2 px-2 bg-slate-100 hover-bg-slate-500 hover-text-white rounded-lg"
                 >
                   {session?.user?.email}
                 </Link>

@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect, ChangeEvent, useRef } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import {
   Subcategoria,
   Categoria,
@@ -64,6 +65,13 @@ const AnunciosAdd: React.FC = () => {
   const apiurl: string =
     process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api/v1";
 
+  const router=useRouter();
+
+  if(!session) {
+    router.push('/login');
+    return;
+  
+  }
   const handleImagenChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
 
@@ -215,7 +223,7 @@ const AnunciosAdd: React.FC = () => {
 
   return (
     <>
-      <div className="p-20 w-full">
+      <div className="p-28 w-full">
         <form
           ref={formRef}
           onSubmit={handleSubmit}
@@ -233,7 +241,7 @@ const AnunciosAdd: React.FC = () => {
                   name="categoria"
                   required
                   onChange={handleCategoriaChange}
-                  className="form-control w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
+                  className="form-control w-full"
                 >
                   <option value=""></option>
                   {categorias.map((c) => (
@@ -256,7 +264,7 @@ const AnunciosAdd: React.FC = () => {
                   value={anuncio.subcategoria}
                   required
                   onChange={handleOnChange}
-                  className="form-control w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
+                  className="form-control w-full"
                 >
                   <option value=""></option>
                   {subcategorias.length > 0 &&
@@ -276,7 +284,7 @@ const AnunciosAdd: React.FC = () => {
                   name="provincia"
                   required
                   onChange={handleProvinciasChange}
-                  className="form-control w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
+                  className="form-control w-full"
                 >
                   <option value=""></option>
                   {provincias.map((p) => (
@@ -294,7 +302,7 @@ const AnunciosAdd: React.FC = () => {
                   id="cod_postal"
                   name="cod_postal"
                   onChange={handleOnChange}
-                  className="form-control w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
+                  className="form-control w-full"
                 >
                   <option value=""></option>
                   {poblaciones.length > 0 &&
@@ -317,7 +325,7 @@ const AnunciosAdd: React.FC = () => {
                   value={anuncio.estado}
                   required
                   onChange={handleOnChange}
-                  className="form-control w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
+                  className="form-control w-full"
                 >
                   <option value=""></option>
                   {estados.length > 0 &&
@@ -339,7 +347,7 @@ const AnunciosAdd: React.FC = () => {
                   value={anuncio.titulo}
                   required
                   onChange={handleOnChange}
-                  className="form-control w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
+                  className="form-control w-full"
                 />
               </div>
               <div>
@@ -355,7 +363,7 @@ const AnunciosAdd: React.FC = () => {
                   value={anuncio.precio}
                   onChange={handleOnChange}
                   required
-                  className="form-control w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
+                  className="form-control w-full"
                 />
               </div>
               <div>
@@ -369,7 +377,7 @@ const AnunciosAdd: React.FC = () => {
                   value={anuncio.telefono}
                   onChange={handleOnChange}
                   required
-                  className="form-control w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
+                  className="form-control w-full"
                 />
                 <div>
                   <label htmlFor="imagen" className="text-gray-700 font-bold">
@@ -382,7 +390,7 @@ const AnunciosAdd: React.FC = () => {
                     accept="image/*" // Para permitir solo archivos de imagen
                     required
                     onChange={handleImagenChange}
-                    className="form-control w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
+                    className="form-control w-full"
                   />
                 </div>
               </div>
@@ -401,7 +409,7 @@ const AnunciosAdd: React.FC = () => {
               minLength={10}
               required
               onChange={handleOnChange}
-              className="form-control w-full mx-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
+              className="form-control w-full"
             >
               {anuncio.description}
             </textarea>

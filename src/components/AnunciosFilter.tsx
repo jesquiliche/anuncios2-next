@@ -268,7 +268,7 @@ const AnunciosFilter: React.FC = () => {
 
   return (
     <>
-      <div className="grid grid-cols-5 container gap-4 mx-auto py-16">
+      <div className="grid grid-cols-5 container gap-4 mx-auto py-28">
         <div className="col-span-1 border shadow-lg p-4 rounded-lg bg-white">
           <h1 className="text-center text-xl font-bold">
             ¿Qué estás buscando?
@@ -315,7 +315,7 @@ const AnunciosFilter: React.FC = () => {
                 id="categoria"
                 name="categoria"
                 onChange={handleCategoriaChange}
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
+                className="form-control w-full"
               >
                 <option value=""></option>
                 {categorias.map((c) => (
@@ -334,7 +334,7 @@ const AnunciosFilter: React.FC = () => {
                 name="subcategoria"
                 value={subcategoria}
                 onChange={(e) => setSubCategoria(e.target.value)}
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
+                className="form-control w-full"
               >
                 <option value=""></option>
                 {subcategorias.length > 0 &&
@@ -354,7 +354,7 @@ const AnunciosFilter: React.FC = () => {
                 name="provincia"
                 value={provincia}
                 onChange={handleProvinciasChange}
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
+                className="form-control w-full"
               >
                 <option value=""></option>
                 {provincias.map((p) => (
@@ -373,7 +373,7 @@ const AnunciosFilter: React.FC = () => {
                 name="poblacion"
                 value={poblacion}
                 onChange={(e) => setPoblacion(e.target.value)}
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
+                className="form-control w-full"
               >
                 <option value=""></option>
                 {poblaciones.length > 0 &&
@@ -393,7 +393,7 @@ const AnunciosFilter: React.FC = () => {
                 name="estado"
                 value={estado}
                 onChange={(e) => setEstado(e.target.value)}
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
+                className="form-control w-full"
               >
                 <option value=""></option>
                 {estados.length > 0 &&
@@ -414,7 +414,7 @@ const AnunciosFilter: React.FC = () => {
                 name="titulo"
                 value={titulo}
                 onChange={(e) => setTitulo(e.target.value)}
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
+                className="form-control w-full"
               />
             </div>
             <div>
