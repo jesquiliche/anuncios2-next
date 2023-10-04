@@ -13,7 +13,7 @@ const NavBar = () => {
   };
 
   return (
-    <header className="fixed w-full">
+    <header className="fixed w-full flex justify-between ">
       <nav className="border-gray-200 dark:bg-gray-900 shadow-lg bg-white mz-auto w-full">
         <div className="flex flex-wrap items-center justify-between mx-auto p-4">
           <Link href="/" className="flex items-center">
