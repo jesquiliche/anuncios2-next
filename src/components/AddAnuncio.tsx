@@ -146,15 +146,6 @@ const AnunciosAdd: React.FC = () => {
     formData.append("provincia", anuncio.provincia);
     formData.append("cod_postal", anuncio.cod_postal);
 
-    // Obtener todas las claves del FormData
-    /*  const keys = Array.from(formData.keys());
-
-    // Iterar a través de las claves y obtener los valores correspondientes
-    keys.forEach((key) => {
-      const value = formData.get(key);
-      console.log(`Campo: ${key}, Valor: ${value}`);
-    });*/
-
     try {
       // Enviar la solicitud POST a tu API
       const token = session?.user?.token || ""; // Si session, user o token son null o undefined, asigna una cadena vacía '' como valor predeterminado.
@@ -200,11 +191,11 @@ const AnunciosAdd: React.FC = () => {
   };
 
   const closeOkMessage = () => {
-    setOk('');
+    setOk("");
   };
 
   const closeErrorMessage = () => {
-    setError('');
+    setError("");
   };
   // Cargar datos iniciales cuando el componente se monta
   useEffect(() => {
@@ -228,7 +219,7 @@ const AnunciosAdd: React.FC = () => {
         <form
           ref={formRef}
           onSubmit={handleSubmit}
-          className="mb-4 w-11/12 py-5 bg-white px-4 rounded-lg border shadow-lg   sm:mx-auto"
+          className="mb-4 w-4/6 py-5 bg-white px-4 rounded-lg border shadow-lg   sm:mx-auto"
         >
           <h1 className="text-center text-xl font-bold">Publicar anuncio</h1>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
@@ -242,7 +233,7 @@ const AnunciosAdd: React.FC = () => {
                   name="categoria"
                   required
                   onChange={handleCategoriaChange}
-                  className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
+                  className="form-control w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
                 >
                   <option value=""></option>
                   {categorias.map((c) => (
@@ -265,7 +256,7 @@ const AnunciosAdd: React.FC = () => {
                   value={anuncio.subcategoria}
                   required
                   onChange={handleOnChange}
-                  className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
+                  className="form-control w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
                 >
                   <option value=""></option>
                   {subcategorias.length > 0 &&
@@ -285,7 +276,7 @@ const AnunciosAdd: React.FC = () => {
                   name="provincia"
                   required
                   onChange={handleProvinciasChange}
-                  className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
+                  className="form-control w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
                 >
                   <option value=""></option>
                   {provincias.map((p) => (
@@ -303,7 +294,7 @@ const AnunciosAdd: React.FC = () => {
                   id="cod_postal"
                   name="cod_postal"
                   onChange={handleOnChange}
-                  className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
+                  className="form-control w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
                 >
                   <option value=""></option>
                   {poblaciones.length > 0 &&
@@ -326,7 +317,7 @@ const AnunciosAdd: React.FC = () => {
                   value={anuncio.estado}
                   required
                   onChange={handleOnChange}
-                  className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
+                  className="form-control w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
                 >
                   <option value=""></option>
                   {estados.length > 0 &&
@@ -348,7 +339,7 @@ const AnunciosAdd: React.FC = () => {
                   value={anuncio.titulo}
                   required
                   onChange={handleOnChange}
-                  className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
+                  className="form-control w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
                 />
               </div>
               <div>
@@ -364,7 +355,7 @@ const AnunciosAdd: React.FC = () => {
                   value={anuncio.precio}
                   onChange={handleOnChange}
                   required
-                  className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
+                  className="form-control w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
                 />
               </div>
               <div>
@@ -378,7 +369,7 @@ const AnunciosAdd: React.FC = () => {
                   value={anuncio.telefono}
                   onChange={handleOnChange}
                   required
-                  className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
+                  className="form-control w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
                 />
                 <div>
                   <label htmlFor="imagen" className="text-gray-700 font-bold">
@@ -391,7 +382,7 @@ const AnunciosAdd: React.FC = () => {
                     accept="image/*" // Para permitir solo archivos de imagen
                     required
                     onChange={handleImagenChange}
-                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
+                    className="form-control w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
                   />
                 </div>
               </div>
@@ -410,7 +401,7 @@ const AnunciosAdd: React.FC = () => {
               minLength={10}
               required
               onChange={handleOnChange}
-              className="w-full mx-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
+              className="form-control w-full mx-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
             >
               {anuncio.description}
             </textarea>
@@ -426,27 +417,27 @@ const AnunciosAdd: React.FC = () => {
             }}
           />
           {ok && (
-        <div className="flex justify-between w-3/5 mt-2 mx-auto p-4 bg-green-100 border rounded-lg">
-          {ok}
-          <button
-            onClick={closeOkMessage}
-            className="ml-2 text-red-500 hover:text-red-700"
-          >
-            Cerrar
-          </button>
-        </div>
-      )}
-      {error && (
-        <div className="flex justify-between w-3/5 mt-2 mx-auto p-4 bg-red-100 border rounded-lg">
-          {error}
-          <button
-            onClick={closeErrorMessage}
-            className="ml-2 text-red-500 hover:text-red-700"
-          >
-            Cerrar
-          </button>
-        </div>
-      )}
+            <div className="flex justify-between w-3/5 mt-2 mx-auto p-4 bg-green-100 border rounded-lg">
+              {ok}
+              <button
+                onClick={closeOkMessage}
+                className="ml-2 text-red-500 hover:text-red-700"
+              >
+                Cerrar
+              </button>
+            </div>
+          )}
+          {error && (
+            <div className="flex justify-between w-3/5 mt-2 mx-auto p-4 bg-red-100 border rounded-lg">
+              {error}
+              <button
+                onClick={closeErrorMessage}
+                className="ml-2 text-red-500 hover:text-red-700"
+              >
+                Cerrar
+              </button>
+            </div>
+          )}
           <div className="flex mt-10 mx-auto w-1/5">
             <button type="submit" className="-row btn-primary mx-auto">
               Añadir

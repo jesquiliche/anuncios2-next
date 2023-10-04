@@ -11,7 +11,7 @@ body {
 
   
 .btn-primary {
-    @apply bg-gray-500 text-white rounded-md hover:bg-gray-700 px-4 py-2 items-center text-center
+    @apply bg-gray-500 text-white rounded-md hover:bg-gray-700 px-4 py-2 items-center text-center border shadow
 
 }
 

@@ -38,7 +38,7 @@ const Register: React.FC = () => {
 
   return (
     <div className="py-16">
-    <div className='p-10 border rounded-lg shadow-lg w-3/5 mx-auto bg-white'>
+    <div className='p-10 border rounded-lg shadow-lg w-2/6 mx-auto bg-white'>
       <h1 className="text-center text-xl font-bold mt-2">Formulario de Registro</h1>
       <form onSubmit={handleSubmit}>
         <div>
@@ -114,9 +114,9 @@ const Register: React.FC = () => {
             className='form-control mt-2'
           />
         </div>
-        
+        <div className='w-2/5 mx-auto'>
         <button type="submit" className='btn-primary mt-5'>Registrarse</button>
-        
+        </div>
       </form>
     </div>
     </div>

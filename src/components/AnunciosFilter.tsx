@@ -427,14 +427,14 @@ const AnunciosFilter: React.FC = () => {
             </div>
           </form>
         </div>
-        <div className="col-span-4 border shadow-lg p-5 rounded-lg w-full bg-white">
-          <RenderPagination />
+        <div className="col-span-4  w-full bg-white p-4 rounded-lg border shadow-lg">
+          <h1 className="text-center text-xl font-bold">Anuncios</h1>
           <div className="grid grid-cols-4 gap-4 mt-2">
             {anuncios &&
               anuncios?.data.map((a) => (
                 <div
                   key={a.id}
-                  className="grid-col-1 mb-1 rounded-lg border shadow-lg bg-slate-100  p-2 flex flex-col justify-between hover:bg-slate-200"
+                  className="grid-col-1 mb-1 rounded-lg border  bg-white p-2 flex flex-col justify-between hover:bg-slate-100 shadow-lg"
                 >
                   <Link href={`/detalle/${a.id}`}>
                     <div>
@@ -474,6 +474,7 @@ const AnunciosFilter: React.FC = () => {
                 </div>
               ))}
           </div>
+          <RenderPagination />
         </div>
       </div>
     </>
