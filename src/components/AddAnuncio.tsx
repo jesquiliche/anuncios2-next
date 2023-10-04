@@ -67,11 +67,7 @@ const AnunciosAdd: React.FC = () => {
 
   const router=useRouter();
 
-  if(!session) {
-    router.push('/login');
   
-  
-  }
   const handleImagenChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
 
@@ -208,7 +204,14 @@ const AnunciosAdd: React.FC = () => {
   // Cargar datos iniciales cuando el componente se monta
   useEffect(() => {
     const fetchData = async () => {
+      if(!session) {
+    
+        router.push('/login');
+        //return(<div>Login</div>);
+      }
       try {
+       
+      
         // Cargar categorías, provincias y estados
         setCategorias(await fetchCategorias());
         setProvincias(await fetchProvincias());

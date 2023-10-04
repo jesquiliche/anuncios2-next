@@ -34,7 +34,7 @@ const Login: React.FC = () => {
       return;
     }
 
-    router.push("/");
+    router.back();
   };
 
   return (
