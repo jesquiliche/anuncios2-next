@@ -13,7 +13,7 @@ const NavBar = () => {
   };
 
   return (
-    <header className="fixed w-full flex justify-between ">
+    <header className="fixed w-full">
       <nav className="border-gray-200 dark:bg-gray-900 shadow-lg bg-white mz-auto w-full">
         <div className="flex flex-wrap items-center justify-between mx-auto p-4">
           <Link href="/" className="flex items-center">
@@ -96,15 +96,16 @@ const NavBar = () => {
               </li>
 
               <li>
-                <Link
+                             </li>
+            </ul>
+          </div>
+          <Link
                   href="/"
                   className="block py-2 px-2 bg-slate-100 hover-bg-slate-500 hover-text-white rounded-lg"
                 >
                   {session?.user?.email}
                 </Link>
-              </li>
-            </ul>
-          </div>
+
         </div>
       </nav>
     </header>
