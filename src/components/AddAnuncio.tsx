@@ -69,7 +69,7 @@ const AnunciosAdd: React.FC = () => {
 
   if(!session) {
     router.push('/login');
-    return;
+  
   
   }
   const handleImagenChange = (event: ChangeEvent<HTMLInputElement>) => {
