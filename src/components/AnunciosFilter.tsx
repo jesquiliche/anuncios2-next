@@ -268,8 +268,8 @@ const AnunciosFilter: React.FC = () => {
 
   return (
     <>
-      <div className="grid grid-cols-5 container gap-4 mx-auto py-28">
-        <div className="col-span-1 border shadow-lg p-4 rounded-lg bg-white">
+     <div className="grid grid-cols-1 mx-auto md:grid-cols-1 lg:grid-cols-5  container lg:gap-4 py-28">
+        <div className="w-full mx-auto border shadow-lg p-4 rounded-lg  bg-white">
           <h1 className="text-center text-xl font-bold">
             ¿Qué estás buscando?
           </h1>
@@ -429,7 +429,7 @@ const AnunciosFilter: React.FC = () => {
         </div>
         <div className="col-span-4  w-full bg-white p-4 rounded-lg border shadow-lg">
           <h1 className="text-center text-xl font-bold">Anuncios</h1>
-          <div className="grid grid-cols-4 gap-4 mt-2">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-2">
             {anuncios &&
               anuncios?.data.map((a) => (
                 <div

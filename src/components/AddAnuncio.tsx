@@ -230,7 +230,7 @@ const AnunciosAdd: React.FC = () => {
         <form
           ref={formRef}
           onSubmit={handleSubmit}
-          className="mb-4 w-4/6 py-5 bg-white px-4 rounded-lg border shadow-lg   sm:mx-auto"
+          className="mb-4 w-1/6 md:w-4/6 py-5 bg-white px-4 rounded-lg border shadow-lg   sm:mx-auto"
         >
           <h1 className="text-center text-xl font-bold">Publicar anuncio</h1>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">

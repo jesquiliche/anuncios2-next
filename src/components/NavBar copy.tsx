@@ -96,16 +96,15 @@ const NavBar = () => {
               </li>
 
               <li>
-                             </li>
-            </ul>
-          </div>
-          <Link
+                <Link
                   href="/"
                   className="block py-2 px-2 bg-slate-100 hover-bg-slate-500 hover-text-white rounded-lg"
                 >
                   {session?.user?.email}
                 </Link>
-
+              </li>
+            </ul>
+          </div>
         </div>
       </nav>
     </header>
