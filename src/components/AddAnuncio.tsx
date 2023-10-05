@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect, ChangeEvent, useRef } from "react";
-import { useSession,status} from "next-auth/react";
+import { useSession} from "next-auth/react";
 import { useRouter } from "next/navigation";
 import {
   Subcategoria,
