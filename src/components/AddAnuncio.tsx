@@ -450,10 +450,10 @@ const AnunciosAdd: React.FC = () => {
             </div>
           )}
           <div className="flex mt-10 mx-auto w-1/5">
-            <button type="submit" className="-row btn-primary mx-auto">
+            <button type="submit" className="btn-primary mx-2">
               Añadir
             </button>
-            <Link href="/" className="btn-primary mx-auto">
+            <Link href="/" className="btn-primary mx-2">
               Volver
             </Link>
           </div>
