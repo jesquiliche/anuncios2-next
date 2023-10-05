@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect, ChangeEvent, useRef } from "react";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession,status} from "next-auth/react";
 import { useRouter } from "next/navigation";
 import {
   Subcategoria,
@@ -62,6 +62,7 @@ const AnunciosAdd: React.FC = () => {
     file: null,
   });
 
+  
   const apiurl: string =
     process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api/v1";
 
@@ -204,6 +205,9 @@ const AnunciosAdd: React.FC = () => {
   // Cargar datos iniciales cuando el componente se monta
   useEffect(() => {
     const fetchData = async () => {
+      if (status === "loading") {
+        return "Loading or not authenticated..."
+      }
       if(!session) {
         const urlWithoutParam = '/login';
         // Realizar la redirección a la URL sin el parámetro
@@ -226,14 +230,14 @@ const AnunciosAdd: React.FC = () => {
 
   return (
     <>
-      <div className="p-28 w-full">
+      <div className="py-28 w-full">
         <form
           ref={formRef}
           onSubmit={handleSubmit}
-          className="mb-4 w-1/6 md:w-4/6 py-5 bg-white px-4 rounded-lg border shadow-lg   sm:mx-auto"
+          className="mb-4 w-11/12 md:w-4/6 py-5 bg-white px-4 rounded-lg border shadow-lg mx-auto"
         >
           <h1 className="text-center text-xl font-bold">Publicar anuncio</h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 md:gap-4 p-4">
             <div>
               <div>
                 <label htmlFor="categoria" className="text-gray-700 font-bold">
@@ -428,8 +432,8 @@ const AnunciosAdd: React.FC = () => {
             }}
           />
           {ok && (
-            <div className="flex justify-between w-3/5 mt-2 mx-auto p-4 bg-green-100 border rounded-lg">
-              {ok}
+            <div className="flex justify-between w-11/12 md:w-3/5 mt-2 p-4 bg-green-100 border rounded-lg">
+              
               <button
                 onClick={closeOkMessage}
                 className="ml-2 text-red-500 hover:text-red-700"
@@ -439,7 +443,7 @@ const AnunciosAdd: React.FC = () => {
             </div>
           )}
           {error && (
-            <div className="flex justify-between w-3/5 mt-2 mx-auto p-4 bg-red-100 border rounded-lg">
+            <div className="w-3/5 mt-2 mx-auto p-4 bg-red-100 border rounded-lg">
               {error}
               <button
                 onClick={closeErrorMessage}
