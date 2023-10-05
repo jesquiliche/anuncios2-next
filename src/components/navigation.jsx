@@ -117,41 +117,43 @@ const ResponsiveMenu = () => {
       </div>
       <div className={`${isOpen ? "block" : "hidden"} sm:hidden`}>
         <div className="px-2 pt-2 pb-3 space-y-1">
-          <Link
-            href="/"
-            className="nav-link-small "
-          >
-            Inicio
-          </Link>
-          <Link
-            href="/MejorValoradas"
-            className="nav-link-small"
-          >
-            Más valoradas
-          </Link>
-          <Link
-            href="/EnCartelera"
-            className="nav-link-small"
-          >
-            En cartelera
-          </Link>
-          <Link
-            href="/Proximamente"
-            className="nav-link-small"          >
-            Proximamente
-          </Link>
-          <Link
-            href="/Populares"
-            className="nav-link-small" 
-          >
-            Populares
-          </Link>
-          <Link
-            href="/Personas"
-            className="nav-link-small" 
-          >
-            Actores
-          </Link>
+        <Link
+                  href="/"
+                  className="nav-link-small"
+                >
+                  Inicio
+                </Link>
+                <Link
+                  href="/login"
+                  className="nav-link-small"
+                >
+                  Login
+                </Link>
+                <button
+                  onClick={cierraSesion}
+                  className="nav-link-small"
+                >
+                  Logout
+                </button>
+             
+                <Link
+                  href="/register"
+                  className="nav-link-small"
+                >
+                  Registrarse
+                </Link>
+                <Link
+                  href="/add"
+                  className="nav-link-small"
+                >
+                  Publicar
+                </Link>
+                <Link
+                  href="/"
+                  className="nav-link-small bg-slate-100"
+                >
+                  {session?.user?.email}
+                </Link>
         </div>
       </div>
     </nav>
