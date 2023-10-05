@@ -20,11 +20,11 @@ export default async function Detalle({ params }: { params: { id: string } }) {
 
   return (
     <main className={styles.main}>
-      <div className="p-20">
-        <div className="mt-10 grid grid-cols-2 gap-4 w-4/5 p-8 rounded-lg shadow-lg mx-auto bg-white">
+      <div className="py-20">
+        <div className="mt-10 grid sm:grid-cols-1 gap-4 w-11/12 lg:w-4/5 md:grid-cols-2 p-8 rounded-lg shadow-lg mx-auto bg-white">
           <div className="col-span-2">
             <h1 className="text-xl font-bold mt-3">{anuncio.titulo}</h1>
-            <div className="grid grid-cols-2 gap-4 mt-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
               <div className="border p-2 rounded-lg shadow-lg h-full bg-slate-100">
                 <label className="font-bold">Categoría</label>
                 <h2 className="text-1xl">{`${anuncio.subcategoria.categoria.nombre}`}</h2>
