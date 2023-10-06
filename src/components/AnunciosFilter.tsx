@@ -446,7 +446,7 @@ const AnunciosFilter: React.FC = () => {
                       </h1>
                       <img
                         src={`${api_images}${a.imagen}`}
-                        className=" rounded-lg shadow-md mt-2 h-100"
+                        className=" rounded-lg shadow-md mt-2 h-60"
                         alt={a.titulo}
                       />
                       {/*<h1 className="text-1xl text-center font-bold mt-2">{a.poblacion.nombre}</h1>*/}
