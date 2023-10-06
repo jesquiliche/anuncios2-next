@@ -454,7 +454,7 @@ const AnunciosFilter: React.FC = () => {
                         {a.titulo}
                       </h1>
                       <h1 className="text-1xl mt-2">
-                        {a.description.substring(0, 100)}
+                        {a.description.substring(0, 100)} ....
                       </h1>
                     </div>
                   </Link>
