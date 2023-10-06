@@ -23,7 +23,7 @@ const ResponsiveMenu = () => {
     
     <nav className="bg-white shadow-xl fixed w-full z-40 border-b-1 opacity-80 p-1">
     <div className="bg-white-900 flex justify-between items-center py-1 px-4">
-      <h1 className="text-shadow text-sm mx-5 font-bold italic text-slate-400 md:text-3xl">Anuncios segunda mano</h1>
+      <h1 className="text-shadow text-sm mx-5 font-bold italic text-slate-300 md:text-3xl">Anuncios segunda mano</h1>
   {!session ? (
     <Link href="/login" className="btn-primary">
       Login
