@@ -434,7 +434,7 @@ const AnunciosAdd: React.FC = () => {
             }}
           />
           {ok && (
-            <div className="flex justify-between w-11/12 md:w-2/5 mt-2 p-4 bg-green-100 border rounded-lg">
+            <div className="flex justify-between w-11/12 md:w-4/6 mt-2 p-4 bg-green-100 border rounded-lg">
               {ok}
               <button
                 onClick={closeOkMessage}
