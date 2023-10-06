@@ -24,7 +24,7 @@ const ResponsiveMenu = () => {
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center h-16">
             <div className="bg-white-900 items-center">
-              <h1 className="text-shadow text-sm font-bold italic text-white md:text-3xl">
+              <h1 className="text-shadow text-sm font-bold italic text-slate-200 md:text-4xl">
                 Anuncios
               </h1>
             </div>
@@ -87,7 +87,7 @@ const ResponsiveMenu = () => {
                     </Link>
                   ) : (
                     <button onClick={cierraSesion} className="nav-link">
-                      Logout - {session?.user?.email}
+                      Logout [{session?.user?.email}]
                     </button>
                   )}
 
