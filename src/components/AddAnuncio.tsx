@@ -168,11 +168,13 @@ const AnunciosAdd: React.FC = () => {
         // La solicitud fue exitosa, puedes manejar la respuesta aquí si es necesario
         setOk("Anuncio publicado correctamente");
         formRef?.current?.reset();
+        setError('');
         resetValues();
       } else {
         // La solicitud no fue exitosa, maneja el error aquí
         const dataError = await response.json();
-        setError(dataError.message[0]);
+        setError(dataError.message);
+        alert(dataError.message);
         console.log(dataError);
       }
     } catch (error) {
@@ -433,7 +435,7 @@ const AnunciosAdd: React.FC = () => {
           />
           {ok && (
             <div className="flex justify-between w-11/12 md:w-3/5 mt-2 p-4 bg-green-100 border rounded-lg">
-              
+              {ok}
               <button
                 onClick={closeOkMessage}
                 className="ml-2 text-red-500 hover:text-red-700"

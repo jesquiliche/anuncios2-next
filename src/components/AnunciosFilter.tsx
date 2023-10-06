@@ -27,7 +27,7 @@ const AnunciosFilter: React.FC = () => {
 
   //Paginación
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(8);
+  const [limit, setLimit] = useState(6);
   const [totalPages, setTotalPages] = useState(0);
 
   //Campos utilizados para los valores de búsqueda
@@ -429,7 +429,7 @@ const AnunciosFilter: React.FC = () => {
         </div>
         <div className="col-span-4  w-full bg-white p-4 rounded-lg border shadow-lg">
           <h1 className="text-center text-xl font-bold">Anuncios</h1>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-2">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-2">
             {anuncios &&
               anuncios?.data.map((a) => (
                 <div
@@ -454,7 +454,7 @@ const AnunciosFilter: React.FC = () => {
                         {a.titulo}
                       </h1>
                       <h1 className="text-1xl mt-2">
-                        {a.description.substring(0, 20)}
+                        {a.description.substring(0, 100)}
                       </h1>
                     </div>
                   </Link>
