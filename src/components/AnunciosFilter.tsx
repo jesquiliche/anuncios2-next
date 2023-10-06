@@ -108,6 +108,7 @@ const AnunciosFilter: React.FC = () => {
     const selectedIndex = event.target.selectedIndex; // Índice de la opción seleccionada
     const selectedText = event.target.options[selectedIndex].text;
     setCategoria(selectedText);
+    setSubcategorias([]);
     setSubcategorias(await fetchSubcategorias(selectedValue));
   };
 
