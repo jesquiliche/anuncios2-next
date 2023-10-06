@@ -87,7 +87,7 @@ const ResponsiveMenu = () => {
                     </Link>
                   ) : (
                     <button onClick={cierraSesion} className="nav-link">
-                      Logout
+                      Logout - {session?.user?.email}
                     </button>
                   )}
 
