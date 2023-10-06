@@ -1,9 +1,8 @@
 "use client";
 import Link from "next/link";
-import Router from "next/router";
 import React, { useState } from "react";
 import { useRouter } from 'next/navigation';
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession,  signOut } from "next-auth/react";
 
 const ResponsiveMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,9 +19,23 @@ const ResponsiveMenu = () => {
   };
 
   return (
-    <nav className="bg-white shadow-lg fixed w-full z-40 border-b-2 opacity-95">
-      <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+    <>
+    
+    <nav className="bg-white shadow-xl fixed w-full z-40 border-b-1 opacity-80 p-1">
+    <div className="bg-white-900 flex justify-between items-center py-1 px-4">
+      <h1 className="text-shadow text-sm mx-5 font-bold italic text-slate-400 md:text-3xl">Anuncios segunda mano</h1>
+  {!session ? (
+    <Link href="/login" className="btn-primary">
+      Login
+    </Link>
+  ) : (
+    <button onClick={cierraSesion} className="btn-primary">
+      Logout
+    </button>
+  )}
+</div>
+  <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-12">
           <div className="flex inset-y-0 left-0  items-center justify-between sm:hidden">
             <button
               onClick={toggleMenu}
@@ -79,20 +92,6 @@ const ResponsiveMenu = () => {
                 >
                   Inicio
                 </Link>
-                {!session ? (
-                <Link
-                  href="/login"
-                  className="nav-link"
-                >
-                  Login
-                </Link>):(
-                <button
-                  onClick={cierraSesion}
-                  className="nav-link"
-                >
-                  Logout
-                </button>
-                )}
                 <Link
                   href="/register"
                   className="nav-link"
@@ -158,6 +157,7 @@ const ResponsiveMenu = () => {
         </div>
       </div>
     </nav>
+    </>
   );
 };
 

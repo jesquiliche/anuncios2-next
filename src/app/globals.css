@@ -11,7 +11,7 @@ body {
 
   
 .btn-primary {
-    @apply bg-gray-500 rounded-xl shadow-md text-white  hover:bg-gray-700 px-4 py-2 focus:bg-blue-200 items-center text-center border
+    @apply bg-gray-500 rounded-xl shadow-md text-white  hover:bg-gray-700 px-4 py-1 focus:bg-blue-200 items-center text-center border
 
 }
 
@@ -34,9 +34,16 @@ body {
 }
 
 .nav-link {
-    @apply text-gray-800 hover:bg-gray-700 hover:text-white px-2 py-1 rounded-md  font-medium
+    @apply text-gray-800 hover:bg-gray-700 hover:text-white px-2 py-1 rounded-md  font-bold
 }
 
 .nav-link-small {
     @apply text-gray-800 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium
 }
+
+.text-shadow {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+
+    -webkit-text-stroke: 2px #8380a6; 
+    
+  }
