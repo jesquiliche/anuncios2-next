@@ -191,7 +191,6 @@ const AnunciosFilter: React.FC = () => {
         // Maneja el caso en que la eliminación no sea exitosa
         console.error("Error al eliminar el anuncio");
         const msg = await response.json();
-        console.log(msg);
         alert(msg);
       }
     } catch (error) {
@@ -447,7 +446,7 @@ const AnunciosFilter: React.FC = () => {
                       </h1>
                       <img
                         src={`${api_images}${a.imagen}`}
-                        className="w-full  rounded-lg shadow-md mt-2"
+                        className="w-full  rounded-lg shadow-md mt-2 h-100"
                         alt={a.titulo}
                       />
                       {/*<h1 className="text-1xl text-center font-bold mt-2">{a.poblacion.nombre}</h1>*/}
