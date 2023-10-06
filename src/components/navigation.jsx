@@ -79,19 +79,20 @@ const ResponsiveMenu = () => {
                 >
                   Inicio
                 </Link>
+                {!session ? (
                 <Link
                   href="/login"
                   className="nav-link"
                 >
                   Login
-                </Link>
+                </Link>):(
                 <button
                   onClick={cierraSesion}
                   className="nav-link"
                 >
                   Logout
                 </button>
-             
+                )}
                 <Link
                   href="/register"
                   className="nav-link"
