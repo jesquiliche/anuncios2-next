@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect, ChangeEvent, useRef } from "react";
-import { useSession} from "next-auth/react";
+import DragAndDropImageUpload from "@/components/DragAndDrop"
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import {
   Subcategoria,
@@ -37,8 +38,9 @@ export interface AnuncioData {
 }
 
 const AnunciosAdd: React.FC = () => {
-  // Estados para rastrear valores del formulario y cargar datos
+  // Estados para rastrear valores del formulario y cargvscode-file://vscode-app/c:/Users/jesus/AppData/Local/Programs/Microsoft%20VS%20Code/resources/app/out/vs/code/electron-sandbox/workbench/workbench.htmlar datos
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [images, setImages] = useState<string[] | null>(null);
   const [error, setError] = useState("");
   const [ok, setOk] = useState("");
   const formRef: React.RefObject<HTMLFormElement> = useRef(null);
@@ -62,22 +64,29 @@ const AnunciosAdd: React.FC = () => {
     file: null,
   });
 
-  
   const apiurl: string =
     process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api/v1";
 
-  const router=useRouter();
+  const router = useRouter();
 
-  
   const handleImagenChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
+    const files = event.target.files;
+    let imagenes: string[] = [];
+
+    if (files && files.length > 0) {
+      for (let x = 1; x < files.length; x++) {
+        imagenes.push(URL.createObjectURL(files[x]));
+      }
+      setImages(imagenes);
+    }
 
     if (file) {
       console.log("Archivo seleccionado:", file);
 
       // Crear una URL de objeto para la vista previa de la imagen
       const imageUrl = URL.createObjectURL(file);
-      console.log(imageUrl);
+
       setImagePreview(imageUrl);
 
       setAnuncio({
@@ -168,7 +177,7 @@ const AnunciosAdd: React.FC = () => {
         // La solicitud fue exitosa, puedes manejar la respuesta aquí si es necesario
         setOk("Anuncio publicado correctamente");
         formRef?.current?.reset();
-        setError('');
+        setError("");
         resetValues();
       } else {
         // La solicitud no fue exitosa, maneja el error aquí
@@ -206,16 +215,14 @@ const AnunciosAdd: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       if (status === "loading") {
-        return "Loading or not authenticated..."
+        return "Loading or not authenticated...";
       }
-      if(!session) {
-        const urlWithoutParam = '/login';
+      if (!session) {
+        const urlWithoutParam = "/login";
         // Realizar la redirección a la URL sin el parámetro
         router.push(urlWithoutParam);
       }
       try {
-       
-      
         // Cargar categorías, provincias y estados
         setCategorias(await fetchCategorias());
         setProvincias(await fetchProvincias());
@@ -387,37 +394,50 @@ const AnunciosAdd: React.FC = () => {
                   required
                   className="form-control w-full"
                 />
-               
               </div>
-              
             </div>
             <div>
-                  <label htmlFor="imagen" className="text-gray-700 font-bold">
-                    Imagen:
-                  </label>
-                  <input
-                    type="file"
-                    id="file"
-                    name="file"
-                    accept="image/*" // Para permitir solo archivos de imagen
-                    required
-                    onChange={handleImagenChange}
-                    className="form-control w-full mb-2"
-                  />   
-                  <img
-                  className="rounded-lg h-40"
-                  id="image-preview"
-                  src={imagePreview || ""}
-                  alt="Vista previa de la imagen"
-                  style={{
-                    display: imagePreview ? "block" : "none",
-                    maxWidth: "100%",
-                    margin: "0 auto",
-                  }}
-                />
-                </div>
+              <label htmlFor="imagen" className="text-gray-700 font-bold">
+                Imagen:
+              </label>
+              <input
+                type="file"
+                id="file"
+                multiple
+                name="file"
+                accept="image/*" // Para permitir solo archivos de imagen
+                required
+                onChange={handleImagenChange}
+                className="form-control w-full mb-2"
+              />
+              <img
+                className="rounded-lg h-40"
+                id="image-preview"
+                src={imagePreview || ""}
+                alt="Vista previa de la imagen"
+                style={{
+                  display: imagePreview ? "block" : "none",
+                  maxWidth: "100%",
+                  margin: "0 auto",
+                }}
+              />
+            </div>
           </div>
-          <div>
+          
+          <div className="grid grid-col-1 md:grid-cols-6 md:gap-4 mt-2 items-center mx-4">
+            {images &&
+              images.map((i, index) => (
+                <div key={index} className="col-span-1">
+                  <img
+                    src={i}
+                    alt={`Image ${index}`}
+                    className="mx-auto z-0 "
+                  />
+                </div>
+              ))}
+          </div>
+
+          <div className="mx-4 mt-2">
             <label
               htmlFor="descripcion"
               className="mx-4 text-gray-700 font-bold"
@@ -435,7 +455,7 @@ const AnunciosAdd: React.FC = () => {
               {anuncio.description}
             </textarea>
           </div>
-       
+      
           {ok && (
             <div className="flex justify-between mx-auto w-11/12 md:w-3/5 mt-2 p-4 bg-green-100 border rounded-lg">
               {ok}

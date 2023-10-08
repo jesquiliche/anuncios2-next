@@ -1,6 +1,7 @@
 
+import CarruselCategorias from "@/components/CarruselCategorias";
 import styles from "./page.module.css";
-import { fetchAnunciosById } from "@/services/api";
+import { fetchAnunciosById,fetchCategorias } from "@/services/api";
 
 export default async function Detalle({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -8,13 +9,13 @@ export default async function Detalle({ params }: { params: { id: string } }) {
     process.env.NEXT_PUBLIC_API_URL || "http://localhost/4000/api/v1";
   const api_images = process.env.NEXT_PUBLIC_IMAGES_URL;
 
-  const cargaDatos = async () => {
-    const anuncio = await fetchAnunciosById(apiUrl + "/anuncios/"+ id);
-    return anuncio;
-  };
-
-  const anuncio = await cargaDatos();
   
+
+  const anuncio = await fetchAnunciosById(id);
+  const categorias =await fetchCategorias();
+
+
+
   const fecha = new Date(anuncio.createdAt);
   const fechaFormateada = fecha.toLocaleDateString(undefined);
 
@@ -49,6 +50,7 @@ export default async function Detalle({ params }: { params: { id: string } }) {
 
               </div>
             </div>
+            <CarruselCategorias data={categorias}/>
             <img
               className="mt-5 rounded-lg shadow-md w-full"
               src={`${api_images}${anuncio.imagen}`}

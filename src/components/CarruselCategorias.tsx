@@ -1,3 +1,4 @@
+'use client'
 import React from "react";
 import Slider from "react-slick";
 import { Categoria } from "../interfaces/interfaces"; // Asegúrate de que la importación sea correcta
@@ -15,8 +16,8 @@ const CarruselCategorias: React.FC<CarruselCategoriasProps> = ({ data, title }) 
     dots: true,
     infinite: true,
     speed: 200,
-    slidesToShow: 4,
-    slidesToScroll: 4,
+    slidesToShow: 5,
+    slidesToScroll: 5,
     responsive: [
       {
         breakpoint: 1024,
@@ -35,20 +36,21 @@ const CarruselCategorias: React.FC<CarruselCategoriasProps> = ({ data, title }) 
     ],
   };
 
+  const api_images=process.env.NEXT_PUBLIC_IMAGES_URL; 
   return (
-    <div className="w-4/5 bg-slate-200 mx-auto py-4 px-10 shadow-lg rounded-lg -mt-4">
-      <div className="container mx-auto mt-5">
-        <div className="mt-3">
+    <div className="w-4/5 bg-slate-100 mx-auto  px-10 shadow-lg rounded-lg mt-4">
+      <div className="container mx-auto">
+        <div>
           <Slider {...settings}>
             {data.map((p) => (
               <div key={p.id}>
                 <div
-                  className="bg-white overflow-hidden rounded-lg shadow-lg border border-gray-300 opacity-100 m-1"
+                  className="m-1"
                 >
-                  <div className="p-2">
-                  <img src={`https://nest-users-production.up.railway.app/api/v1${p.imagen}`} alt={p.nombre} />
+                  <div className="flex  h-40 items-center">
+                  <img src={`${api_images}${p.imagen}`} alt={p.nombre} />
 
-                    <h1 className="text-4xl">{p.nombre}</h1>
+                    
                   </div>
                 </div>
               </div>

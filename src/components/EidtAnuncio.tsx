@@ -19,6 +19,7 @@ import {
   fetchAnunciosById,
 } from "@/services/api";
 import Link from "next/link";
+import MyDropzone from "./reactDropzone";
 
 interface File extends Blob {
   readonly lastModified: number;
@@ -437,6 +438,7 @@ const AnunciosEdit: React.FC<Props> = ({ id }) => {
               <input
                 type="file"
                 id="file"
+                multiple
                 name="file"
                 accept="image/*" // Para permitir solo archivos de imagen
                 required
@@ -444,7 +446,7 @@ const AnunciosEdit: React.FC<Props> = ({ id }) => {
                 className="form-control w-full mb-2"
               />
               <img
-                className="rounded-lg h-40"
+                className="rounded-lg h-60 mx-auto"
                 id="image-preview"
                 src={imagePreview || ""}
                 alt="Vista previa de la imagen"
@@ -456,6 +458,7 @@ const AnunciosEdit: React.FC<Props> = ({ id }) => {
               />
             </div>
           </div>
+          
           <div>
             <label
               htmlFor="descripcion"

@@ -35,7 +35,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/components/FilterInicio.jsx"
-  ],
+, "src/components/reactDropzone.jsx"  ],
   "exclude": [
     "node_modules"
   ]
