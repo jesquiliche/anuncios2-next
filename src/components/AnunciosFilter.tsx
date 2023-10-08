@@ -466,9 +466,9 @@ const AnunciosFilter: React.FC = () => {
                       >
                         Borrar
                       </button>
-                      <button className="btn-primary w-full m-1 text-md">
+                      <Link href={`/edit/${a.id}`} className="btn-primary w-full m-1 text-md">
                         Editar
-                      </button>
+                      </Link>
                     </div>
                   )}
                 </div>

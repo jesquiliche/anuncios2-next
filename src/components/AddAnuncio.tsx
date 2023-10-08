@@ -174,8 +174,6 @@ const AnunciosAdd: React.FC = () => {
         // La solicitud no fue exitosa, maneja el error aquí
         const dataError = await response.json();
         setError(dataError.message);
-        alert(dataError.message);
-        console.log(dataError);
       }
     } catch (error) {
       // Manejar errores de red u otros errores aquí
@@ -239,7 +237,7 @@ const AnunciosAdd: React.FC = () => {
           className="mb-4 w-11/12 md:w-4/6 py-5 bg-white px-4 rounded-lg border shadow-lg mx-auto"
         >
           <h1 className="text-center text-xl font-bold">Publicar anuncio</h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 md:gap-4 p-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 md:gap-4 p-4">
             <div>
               <div>
                 <label htmlFor="categoria" className="text-gray-700 font-bold">
@@ -249,6 +247,7 @@ const AnunciosAdd: React.FC = () => {
                   id="categoria"
                   name="categoria"
                   required
+                  autoFocus
                   onChange={handleCategoriaChange}
                   className="form-control w-full"
                 >
@@ -388,7 +387,11 @@ const AnunciosAdd: React.FC = () => {
                   required
                   className="form-control w-full"
                 />
-                <div>
+               
+              </div>
+              
+            </div>
+            <div>
                   <label htmlFor="imagen" className="text-gray-700 font-bold">
                     Imagen:
                   </label>
@@ -399,11 +402,20 @@ const AnunciosAdd: React.FC = () => {
                     accept="image/*" // Para permitir solo archivos de imagen
                     required
                     onChange={handleImagenChange}
-                    className="form-control w-full"
-                  />
+                    className="form-control w-full mb-2"
+                  />   
+                  <img
+                  className="rounded-lg h-40"
+                  id="image-preview"
+                  src={imagePreview || ""}
+                  alt="Vista previa de la imagen"
+                  style={{
+                    display: imagePreview ? "block" : "none",
+                    maxWidth: "100%",
+                    margin: "0 auto",
+                  }}
+                />
                 </div>
-              </div>
-            </div>
           </div>
           <div>
             <label
@@ -418,23 +430,14 @@ const AnunciosAdd: React.FC = () => {
               minLength={10}
               required
               onChange={handleOnChange}
-              className="form-control w-full"
+              className="form-control w-full mx-auto"
             >
               {anuncio.description}
             </textarea>
           </div>
-          <img
-            id="image-preview"
-            src={imagePreview || ""}
-            alt="Vista previa de la imagen"
-            style={{
-              display: imagePreview ? "block" : "none",
-              maxWidth: "100%",
-              margin: "0 auto",
-            }}
-          />
+       
           {ok && (
-            <div className="flex justify-between w-11/12 md:w-3/5 mt-2 p-4 bg-green-100 border rounded-lg">
+            <div className="flex justify-between mx-auto w-11/12 md:w-3/5 mt-2 p-4 bg-green-100 border rounded-lg">
               {ok}
               <button
                 onClick={closeOkMessage}
