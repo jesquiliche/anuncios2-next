@@ -91,9 +91,9 @@ export const fetchAnuncios = async (url:string): Promise<Anuncios> => {
   }
 };
 
-export const fetchAnunciosById = async (url:string,id:string): Promise<Anuncio> => {
+export const fetchAnunciosById = async (id:string): Promise<Anuncio> => {
   try {
-    const response = await fetch(`${url}/${id}`,{ cache: 'no-store' });
+    const response = await fetch(`${apiUrl}/anuncios/${id}`,{ cache: 'no-store' });
     if (!response.ok) {
       throw new Error(`${response.status} ${response.statusText}`);
     }

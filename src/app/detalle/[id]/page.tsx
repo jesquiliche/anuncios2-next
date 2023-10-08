@@ -9,7 +9,7 @@ export default async function Detalle({ params }: { params: { id: string } }) {
   const api_images = process.env.NEXT_PUBLIC_IMAGES_URL;
 
   const cargaDatos = async () => {
-    const anuncio = await fetchAnunciosById(apiUrl + "/anuncios", id);
+    const anuncio = await fetchAnunciosById(apiUrl + "/anuncios/"+ id);
     return anuncio;
   };
 

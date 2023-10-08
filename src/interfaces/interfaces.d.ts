@@ -60,7 +60,7 @@
     titulo: string
     description: string
     imagen: string
-    precio: string
+    precio: number
     telefono: string
     provincia: string
     cod_postal: string
