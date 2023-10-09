@@ -20,7 +20,7 @@ const ResponsiveMenu = () => {
 
   return (
     <>
-      <nav className="bg-white shadow-xl fixed w-full z-40 border-b-1 opacity-80 py-1">
+      <nav className="bg-white shadow-xl w-full z-40 border-b-1 opacity-80 py-1">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center h-16">
             <div className="bg-white-900 items-center">
