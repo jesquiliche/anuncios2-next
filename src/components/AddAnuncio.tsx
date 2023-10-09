@@ -68,6 +68,7 @@ const AnunciosAdd: React.FC = () => {
 
   // Función para recibir la lista de ficheros
   const handleFilesUploaded = (files:File[]) => {
+    console.log("Funcion llamada en add")
     setUploadedFiles(files);
   };
   const apiurl: string =
@@ -88,13 +89,9 @@ const AnunciosAdd: React.FC = () => {
     }
 
     if (file) {
-      console.log("Archivo seleccionado:", file);
-
       // Crear una URL de objeto para la vista previa de la imagen
       const imageUrl = URL.createObjectURL(file);
-
       setImagePreview(imageUrl);
-
       setAnuncio({
         ...anuncio,
         file: file,
@@ -148,6 +145,8 @@ const AnunciosAdd: React.FC = () => {
 
     setError("");
     setOk("");
+    console.log("ficheros cargados")
+    console.log(uploadedFiles)
     // Crear un objeto FormData con los datos del formulario
     const formData = new FormData();
     formData.append("titulo", anuncio.titulo);

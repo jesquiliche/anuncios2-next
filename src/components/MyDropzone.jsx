@@ -16,9 +16,10 @@ export default function Previews({ onFilesUploaded }) {
         })
       );
       setFiles(updatedFiles);
-
+       console.log(updatedFiles) 
       // Llama a la función onFilesUploaded y pasa la lista de ficheros
       if (onFilesUploaded) {
+        console.log("llamada funcion")
         onFilesUploaded(updatedFiles);
       }
     },
