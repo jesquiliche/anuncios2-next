@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect, ChangeEvent, useRef } from "react";
-import DragAndDropImageUpload from "@/components/DragAndDrop"
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import {
@@ -18,6 +17,7 @@ import {
   fetchEstados,
 } from "@/services/api";
 import Link from "next/link";
+import Previews from "@/components/MyDropzone";
 
 interface File extends Blob {
   readonly lastModified: number;
@@ -64,6 +64,12 @@ const AnunciosAdd: React.FC = () => {
     file: null,
   });
 
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+
+  // Función para recibir la lista de ficheros
+  const handleFilesUploaded = (files:File[]) => {
+    setUploadedFiles(files);
+  };
   const apiurl: string =
     process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api/v1";
 
@@ -423,7 +429,7 @@ const AnunciosAdd: React.FC = () => {
               />
             </div>
           </div>
-          
+          <Previews onFilesUploaded={handleFilesUploaded}/>
           <div className="grid grid-col-1 md:grid-cols-6 md:gap-4 mt-2 items-center mx-4">
             {images &&
               images.map((i, index) => (
