@@ -180,12 +180,16 @@ const AnunciosAdd: React.FC = () => {
 
       if (response.ok) {
         // La solicitud fue exitosa, puedes manejar la respuesta aquí si es necesario
-        setOk("Anuncio publicado correctamente");
+        const data= await response.json()
+        setOk("Anuncio publicado correctamente id: "+data.id);
         formRef?.current?.reset();
         setError("");
         resetValues();
       } else {
         // La solicitud no fue exitosa, maneja el error aquí
+        if (response.status==401){
+          alert("Sesión caducada");
+        }
         const dataError = await response.json();
         setError(dataError.message);
       }
@@ -403,7 +407,7 @@ const AnunciosAdd: React.FC = () => {
             </div>
             <div>
               <label htmlFor="imagen" className="text-gray-700 font-bold">
-                Imagen:
+                Imagen portada:
               </label>
               <input
                 type="file"
@@ -428,8 +432,9 @@ const AnunciosAdd: React.FC = () => {
               />
             </div>
           </div>
+          <h1 className="text-center font-bold">Galería de imagenes</h1>
           <Previews onFilesUploaded={handleFilesUploaded}/>
-          <div className="grid grid-col-1 md:grid-cols-6 md:gap-4 mt-2 items-center mx-4">
+        {/*}  <div className="grid grid-col-1 md:grid-cols-6 md:gap-4 mt-2 items-center mx-4">
             {images &&
               images.map((i, index) => (
                 <div key={index} className="col-span-1">
@@ -441,7 +446,7 @@ const AnunciosAdd: React.FC = () => {
                 </div>
               ))}
           </div>
-
+              */}
           <div className="mx-4 mt-2">
             <label
               htmlFor="descripcion"
