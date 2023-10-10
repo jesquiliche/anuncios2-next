@@ -22,7 +22,7 @@ export default async function Detalle({ params }: { params: { id: string } }) {
   return (
     <main className={styles.main}>
       <div className="py-5">
-        <div className="mt-5 grid sm:grid-cols-1 gap-4 w-11/12 lg:w-4/5 md:grid-cols-2 p-8 rounded-lg shadow-lg mx-auto bg-white">
+        <div className="grid sm:grid-cols-1 gap-4 w-11/12 lg:w-4/5 md:grid-cols-2 p-8 rounded-lg shadow-lg mx-auto bg-white">
           <div className="col-span-2">
             <h1 className="text-xl font-bold mt-3">{anuncio.titulo}</h1>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
