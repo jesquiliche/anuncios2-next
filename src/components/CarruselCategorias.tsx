@@ -38,7 +38,7 @@ const CarruselCategorias: React.FC<CarruselCategoriasProps> = ({ data, title }) 
 
   const api_images=process.env.NEXT_PUBLIC_IMAGES_URL; 
   return (
-    <div className="w-4/5 bg-slate-100 mx-auto  px-5 shadow-lg rounded-lg mt-4">
+    <div className="w-4/5 bg-slate-500 mx-auto  px-5 shadow-lg rounded-lg mt-4">
       <div className="container mx-auto">
         <div>
           <Slider {...settings}>
