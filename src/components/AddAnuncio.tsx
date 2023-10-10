@@ -246,7 +246,7 @@ const AnunciosAdd: React.FC = () => {
 
   return (
     <>
-      <div className="py-28 w-full">
+      <div className="py-5 w-full">
         <form
           ref={formRef}
           onSubmit={handleSubmit}

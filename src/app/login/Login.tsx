@@ -38,7 +38,7 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="py-28">
+    <div className="py-5">
       <div className="p-10 w-5/6 border rounded-lg shadow-lg  mx-auto sm:w-2/6  bg-white">
         <h1 className="text-center text-xl font-bold mt-2">Iniciar sesión</h1>
         <form onSubmit={handleSubmit}>

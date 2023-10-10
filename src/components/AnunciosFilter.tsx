@@ -268,7 +268,7 @@ const AnunciosFilter: React.FC = () => {
 
   return (
     <>
-     <div className="grid grid-cols-1 mx-auto md:grid-cols-1 lg:grid-cols-5  container lg:gap-4 py-28">
+     <div className="grid grid-cols-1 mx-auto md:grid-cols-1 lg:grid-cols-5  container lg:gap-4 py-5">
         <div className="w-full mx-auto border shadow-lg p-4 rounded-lg  bg-white">
           <h1 className="text-center text-xl font-bold">
             ¿Qué estás buscando?

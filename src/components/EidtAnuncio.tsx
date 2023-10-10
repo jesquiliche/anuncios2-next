@@ -19,7 +19,6 @@ import {
   fetchAnunciosById,
 } from "@/services/api";
 import Link from "next/link";
-import MyDropzone from "./reactDropzone";
 
 interface File extends Blob {
   readonly lastModified: number;
@@ -251,7 +250,7 @@ const AnunciosEdit: React.FC<Props> = ({ id }) => {
   };
   return (
     <>
-      <div className="py-28 w-full">
+      <div className="py-14 w-full">
         <form
           ref={formRef}
           onSubmit={handleSubmit}
