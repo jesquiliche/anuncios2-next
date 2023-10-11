@@ -1,6 +1,6 @@
 // api.ts
 
-import { Categoria, Subcategoria, Provincia, Poblacion,Estado,Anuncios,Anuncio } from '../interfaces/interfaces';
+import { Categoria, Subcategoria, Provincia, Poblacion,Estado,Anuncios,Anuncio,Foto } from '../interfaces/interfaces';
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -105,6 +105,21 @@ export const fetchAnunciosById = async (id:string): Promise<Anuncio> => {
   }
 };
 
+export const fetchFotosByIdAnuncio = async (id:string): Promise<Anuncio> => {
+  try {
+    const response = await fetch(`${apiUrl}/anuncios/${id}`,{ cache: 'no-store' });
+    if (!response.ok) {
+      throw new Error(`${response.status} ${response.statusText}`);
+    }
+    const data: Anuncio = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error al cargar Anuncios:', error);
+    throw error;
+  }
+};
+
+
 export async function postRegister(url:string,datos: {
   name: string;
   primer_apellido: string;
@@ -140,5 +155,20 @@ export async function postRegister(url:string,datos: {
     }
   } catch (error) {
     alert(error);
+  }
+};
+
+export const fetchFotos = async (id: string): Promise<Foto[]> => {
+  try {
+    const response = await fetch(`${apiUrl}/fotos/anuncio/${id}`);
+    
+    if (!response.ok) {
+      throw new Error('Error em la solicitud');
+    }
+    const data: Foto[] = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error al cargar subcategorías:', error);
+    throw error;
   }
 };

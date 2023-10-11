@@ -145,8 +145,7 @@ const AnunciosAdd: React.FC = () => {
 
     setError("");
     setOk("");
-    console.log("ficheros cargados")
-    console.log(uploadedFiles)
+  
     // Crear un objeto FormData con los datos del formulario
     const formData = new FormData();
     formData.append("titulo", anuncio.titulo);
@@ -181,10 +180,14 @@ const AnunciosAdd: React.FC = () => {
       if (response.ok) {
         // La solicitud fue exitosa, puedes manejar la respuesta aquí si es necesario
         const data= await response.json()
+          
+        uploadFilesServer(data.id, uploadedFiles);
+  
         setOk("Anuncio publicado correctamente id: "+data.id);
         formRef?.current?.reset();
         setError("");
         resetValues();
+
       } else {
         // La solicitud no fue exitosa, maneja el error aquí
         if (response.status==401){
@@ -200,6 +203,53 @@ const AnunciosAdd: React.FC = () => {
     }
   };
 
+  const uploadFile = async (id: string, file: File) => {
+   
+    try {
+      const token = session?.user?.token || "";
+  
+      const formData = new FormData();
+      formData.append("anuncio_id", id);
+      formData.append("file", file);
+  
+      const response = await fetch(`${apiurl}/fotos/upload`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      });
+  
+      if (!response.ok) {
+        const dataError = await response.json();
+        setError(dataError.message);
+        return; // O manejar el error de alguna manera
+      }
+  
+      // Archivo subido con éxito, puedes realizar alguna acción aquí
+      console.log(`Archivo ${file.name} subido con éxito.`);
+    } catch (error) {
+      // Manejar errores de red u otros errores aquí
+      alert(error);
+      console.error("Error de red:", error);
+    }
+  };
+  
+  const uploadFilesServer = async (id: string, fotos: File[]) => {
+    try {
+      for (const file of fotos) {
+        await uploadFile(id, file);
+      }
+    } catch (error) {
+      // Manejar errores de carga de archivos aquí
+      alert(error);
+      console.error("Error al cargar archivos:", error);
+    }
+  };
+  
+  
+
+  //Limpia todos los campos del formulario
   const resetValues = () => {
     setAnuncio({
       ...anuncio,
@@ -213,22 +263,27 @@ const AnunciosAdd: React.FC = () => {
     setImagePreview(null);
   };
 
+  //Borrar mensajes de éxito de al guardar
   const closeOkMessage = () => {
     setOk("");
   };
 
+  //Borra mensajes de error despues del último guardado 
   const closeErrorMessage = () => {
     setError("");
   };
+
   // Cargar datos iniciales cuando el componente se monta
   useEffect(() => {
     const fetchData = async () => {
+      //La sesión se esta cargando
       if (status === "loading") {
         return "Loading or not authenticated...";
       }
+      //Si no ha iniciado sesión
       if (!session) {
         const urlWithoutParam = "/login";
-        // Realizar la redirección a la URL sin el parámetro
+        //Redirigir a página de login
         router.push(urlWithoutParam);
       }
       try {
