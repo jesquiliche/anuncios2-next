@@ -16,7 +16,7 @@ export default async function Detalle({ params }: { params: { id: string } }) {
   return (
     <main className={styles.main}>
       <div className="p-4 w-11/12 mx-auto bg-white mt-5 rounded-lg shadow-lg">
-        <div className="grid grid-cols-3 gap-4 mx-auto">
+        <div className="grid grid-cols-3 gap-4 mx-auto p-4">
           <div className="col-span-1 bg-white">
             <img
               className="mt-5 rounded-lg mx-auto "
@@ -31,7 +31,7 @@ export default async function Detalle({ params }: { params: { id: string } }) {
                 {anuncio.titulo}
               </h1>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
-                <div className="border p-2 rounded-lg shadow-lg h-full bg-slate-300">
+                <div className="border p-2 rounded-lg shadow-lg h-full bg-slate-100">
                   <label className="font-bold">Categoría</label>
                   <h2 className="text-1xl">{`${anuncio.subcategoria.categoria.nombre}`}</h2>
 
@@ -43,7 +43,7 @@ export default async function Detalle({ params }: { params: { id: string } }) {
 
                   <h2 className="text-1xl">{fechaFormateada}</h2>
                 </div>
-                <div className="border p-2 rounded-lg shadow-lg h-full bg-slate-300">
+                <div className="border p-2 rounded-lg shadow-lg h-full bg-slate-100">
                   <label className="font-bold">Precio</label>
                   <h2 className="text-1xl">{`${anuncio.precio} Euros`}</h2>
                   <label className="font-bold">Estado</label>
@@ -57,7 +57,7 @@ export default async function Detalle({ params }: { params: { id: string } }) {
 
               
 
-              <div className="mt-5 bg-slate-300 rounded-lg shadow-lg p-2">
+              <div className="mt-5 bg-slate-100 rounded-lg shadow-lg p-2">
                 <h1 className="text-center font-bold text-2xl">Descripción</h1>
                 <h1 className="mt-5 text-1xl text-justify">
                   {anuncio.description}
