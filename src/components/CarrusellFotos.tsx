@@ -75,7 +75,7 @@ const CarruselFotos: React.FC<CarruselCategoriasProps> = ({
             ))}
           </Slider>
         </div>
-        <img src={imagePreview} alt={imagePreview} className="mt-10"/>
+        <img src={imagePreview} alt={imagePreview} className=""/>
       </div>
     </div>
   );
