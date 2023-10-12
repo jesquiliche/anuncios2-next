@@ -59,9 +59,10 @@ const CarruselFotos: React.FC<CarruselCategoriasProps> = ({
     <div className="bg-white mx-auto py-2">
       <div className=" mx-auto">
         
+      {data.length>1 && (
         <div className="mt-5">
           <Slider {...settings}>
-            {data.map((p) => (
+            {            data.map((p) => (
               <div key={p.path}>
                 <div className="m-1">
                   <div className="flex flex-col items-center border-2 shadow-lg p-2 bg-white">
@@ -84,7 +85,7 @@ const CarruselFotos: React.FC<CarruselCategoriasProps> = ({
               </div>
             ))}
           </Slider>
-        </div>
+        </div>)}
         <img src={imagePreview} alt={imagePreview}
          
         className="relative mt-8  scale-1 md:hover:transform hover:scale-[2]  md:hover:translate-y-[-80px] md:hover:translate-x-[200px] border-2 p-2 bg-white transition-transform duration-300"></img>
