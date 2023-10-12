@@ -46,7 +46,7 @@ const CarruselFotos: React.FC<CarruselCategoriasProps> = ({ data,mainImage,title
     <div className="bg-white mx-auto py-2 mt-10 ">
       <div className=" mx-auto">
         <img src={imagePreview} alt={imagePreview}/>
-        <div>
+        <div className="mt-5">
           
           <Slider {...settings}>
             {data.map((p) => (
