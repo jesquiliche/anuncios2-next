@@ -15,7 +15,7 @@ export default async function Detalle({ params }: { params: { id: string } }) {
 
   return (
     <main className={styles.main}>
-      <div className="p-4 w-4/5 mx-auto bg-white mt-5 rounded-lg shadow-lg">
+      <div className="p-4 w-11/12 mx-auto bg-white mt-5 rounded-lg shadow-lg">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mx-auto">
           <div className="col-span-1 bg-white">
             <h1 className="text-shadow-red text-sm font-bold italic justify-end md:text-3xl">
