@@ -12,7 +12,7 @@ export default async function Detalle({ params }: { params: { id: string } }) {
   const fotos = await fetchFotos(id);
   const fecha = new Date(anuncio.createdAt);
   const fechaFormateada = fecha.toLocaleDateString(undefined);
-
+  
   return (
     <main className={styles.main}>
       <div className="p-4 w-11/12 mx-auto bg-white mt-5 rounded-lg shadow-lg">

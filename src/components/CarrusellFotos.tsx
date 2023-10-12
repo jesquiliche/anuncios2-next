@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Slider from "react-slick";
 import { Foto } from "../interfaces/interfaces"; // Asegúrate de que la importación sea correcta
 import "slick-carousel/slick/slick.css";
@@ -42,8 +42,16 @@ const CarruselFotos: React.FC<CarruselCategoriasProps> = ({
   };
 
   const api_images = process.env.NEXT_PUBLIC_IMAGES_URL;
+  
   const [imagePreview, setImagePreview] = useState(api_images + mainImage);
   const [mainImage2, setMainImage2] = useState(mainImage);
+  const newImage ={id:0,path:mainImage2,anuncio_id:1};
+
+  useEffect(() => {
+    setImagePreview(api_images + mainImage); // Actualiza imagePreview cuando cambie mainImage
+  }, [mainImage])
+  data=[newImage,...data]
+  
   return (
     <div className="bg-white mx-auto py-2">
       <div className=" mx-auto">
@@ -54,6 +62,7 @@ const CarruselFotos: React.FC<CarruselCategoriasProps> = ({
               <div key={p.path}>
                 <div className="m-1">
                   <div className="flex flex-col items-center border-2 shadow-lg p-2 bg-white">
+                  
                     <img
                     
                     src={`${api_images}${p.path}`}
@@ -64,9 +73,8 @@ const CarruselFotos: React.FC<CarruselCategoriasProps> = ({
                       onMouseEnter={() =>
                         setImagePreview(`${api_images}${p.path}`)
                       }
-                      onMouseLeave={() =>
-                        setImagePreview(`${api_images}${mainImage2}`)
-                      }
+                  
+
                     />
                   </div>
                 </div>
@@ -74,7 +82,9 @@ const CarruselFotos: React.FC<CarruselCategoriasProps> = ({
             ))}
           </Slider>
         </div>
-        <img src={imagePreview} alt={imagePreview} className="mt-8  scale-1 hover:transform hover:scale-[1.75] hover:translate-x-1/2 transition-transform duration-300"></img>
+        <img src={imagePreview} alt={imagePreview}
+         
+        className="relative mt-8  scale-1 hover:transform hover:scale-[2.5]  hover:translate-y-[-80px] hover:translate-x-[200px] border-2 p-2 bg-white transition-transform duration-300"></img>
         
       </div>
     </div>
