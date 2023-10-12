@@ -424,6 +424,8 @@ const AnunciosAdd: React.FC = () => {
                   id="titulo"
                   name="titulo"
                   value={anuncio.titulo}
+                  minLength={10}
+                  maxLength={254}
                   required
                   onChange={handleOnChange}
                   className="form-control w-full"
