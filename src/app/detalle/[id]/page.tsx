@@ -65,10 +65,7 @@ export default async function Detalle({ params }: { params: { id: string } }) {
               </h1>
             </div>
           </div>
-          {/*   <div className="px-4 col-span-3">
-          {fotos.length>0 && 
-          <CarruselFotos data={fotos} />}
-          </div>*/}
+      
         </div>
       </div>
     </main>
