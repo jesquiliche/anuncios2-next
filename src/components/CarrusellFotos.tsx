@@ -9,18 +9,21 @@ import "slick-carousel/slick/slick-theme.css";
 interface CarruselCategoriasProps {
   data: Foto[];
   title?: string;
-  mainImage:string;
+  mainImage: string;
 }
 
-const CarruselFotos: React.FC<CarruselCategoriasProps> = ({ data,mainImage,title }) => {
-  
+const CarruselFotos: React.FC<CarruselCategoriasProps> = ({
+  data,
+  mainImage,
+  title,
+}) => {
   const settings = {
     dots: true,
     infinite: true,
     speed: 200,
     slidesToShow: 4,
     slidesToScroll: 1,
-    autoplay:true,
+    autoplay: true,
     responsive: [
       {
         breakpoint: 1024,
@@ -40,12 +43,12 @@ const CarruselFotos: React.FC<CarruselCategoriasProps> = ({ data,mainImage,title
   };
 
   const api_images = process.env.NEXT_PUBLIC_IMAGES_URL;
-  const [imagePreview,setImagePreview]=useState(api_images+mainImage);
-  const [mainImage2,setMainImage2]=useState(mainImage);
+  const [imagePreview, setImagePreview] = useState(api_images + mainImage);
+  const [mainImage2, setMainImage2] = useState(mainImage);
   return (
     <div className="bg-white mx-auto py-2 mt-10 ">
       <div className=" mx-auto">
-        <img src={imagePreview} alt={imagePreview}/>
+        <img src={imagePreview} alt={imagePreview} />
         <div className="mt-5">
           <Slider {...settings}>
             {data.map((p) => (
@@ -55,10 +58,14 @@ const CarruselFotos: React.FC<CarruselCategoriasProps> = ({ data,mainImage,title
                     <img
                       src={`${api_images}${p.path}`}
                       alt={p.path}
-                      className="[height=200] z-0 rounded-lg hover:scale-[1.3] transform transition-transform cursor-pointer hover:z-50"
-                      onMouseEnter={() => setImagePreview(`${api_images}${p.path}`)}
-                      onMouseLeave={() => setImagePreview(`${api_images}${mainImage2}`)}
-                   />
+                      className="z-0 rounded-lg transform transition-transform cursor-pointer hover:z-50 hover:scale-105"
+                      onMouseEnter={() =>
+                        setImagePreview(`${api_images}${p.path}`)
+                      }
+                      onMouseLeave={() =>
+                        setImagePreview(`${api_images}${mainImage2}`)
+                      }
+                    />
                   </div>
                 </div>
               </div>
