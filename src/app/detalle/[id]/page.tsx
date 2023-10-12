@@ -19,7 +19,7 @@ export default async function Detalle({ params }: { params: { id: string } }) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mx-auto">
           <div className="col-span-1 bg-white">
             <h1 className="text-shadow-red text-sm font-bold italic justify-end md:text-3xl">
-              {parseInt(anuncio.precio)} €
+              {Math.round(anuncio.precio)} €
             </h1>
             <img
               className="mt-5 rounded-lg mx-auto "
