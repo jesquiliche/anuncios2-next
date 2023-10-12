@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect, ChangeEvent, useRef } from "react";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import {
   Subcategoria,
@@ -67,8 +67,8 @@ const AnunciosAdd: React.FC = () => {
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
 
   // Función para recibir la lista de ficheros
-  const handleFilesUploaded = (files:File[]) => {
-    console.log("Funcion llamada en add")
+  const handleFilesUploaded = (files: File[]) => {
+    console.log("Funcion llamada en add");
     setUploadedFiles(files);
   };
   const apiurl: string =
@@ -145,7 +145,7 @@ const AnunciosAdd: React.FC = () => {
 
     setError("");
     setOk("");
-  
+
     // Crear un objeto FormData con los datos del formulario
     const formData = new FormData();
     formData.append("titulo", anuncio.titulo);
@@ -179,19 +179,22 @@ const AnunciosAdd: React.FC = () => {
 
       if (response.ok) {
         // La solicitud fue exitosa, puedes manejar la respuesta aquí si es necesario
-        const data= await response.json()
-          
+        const data = await response.json();
+
         uploadFilesServer(data.id, uploadedFiles);
-  
-        setOk("Anuncio publicado correctamente id: "+data.id);
+
+        setOk("Anuncio publicado correctamente id: " + data.id);
         formRef?.current?.reset();
         setError("");
         resetValues();
-
       } else {
         // La solicitud no fue exitosa, maneja el error aquí
-        if (response.status==401){
+        if (response.status == 401) {
           alert("Sesión caducada");
+          signOut();
+          const urlWithoutParam = "/login";
+          //Redirigir a página de login
+          router.push(urlWithoutParam);
         }
         const dataError = await response.json();
         setError(dataError.message);
@@ -204,14 +207,13 @@ const AnunciosAdd: React.FC = () => {
   };
 
   const uploadFile = async (id: string, file: File) => {
-   
     try {
       const token = session?.user?.token || "";
-  
+
       const formData = new FormData();
       formData.append("anuncio_id", id);
       formData.append("file", file);
-  
+
       const response = await fetch(`${apiurl}/fotos/upload`, {
         method: "POST",
         headers: {
@@ -219,13 +221,13 @@ const AnunciosAdd: React.FC = () => {
         },
         body: formData,
       });
-  
+
       if (!response.ok) {
         const dataError = await response.json();
         setError(dataError.message);
         return; // O manejar el error de alguna manera
       }
-  
+
       // Archivo subido con éxito, puedes realizar alguna acción aquí
       console.log(`Archivo ${file.name} subido con éxito.`);
     } catch (error) {
@@ -234,7 +236,7 @@ const AnunciosAdd: React.FC = () => {
       console.error("Error de red:", error);
     }
   };
-  
+
   const uploadFilesServer = async (id: string, fotos: File[]) => {
     try {
       for (const file of fotos) {
@@ -246,8 +248,6 @@ const AnunciosAdd: React.FC = () => {
       console.error("Error al cargar archivos:", error);
     }
   };
-  
-  
 
   //Limpia todos los campos del formulario
   const resetValues = () => {
@@ -268,7 +268,7 @@ const AnunciosAdd: React.FC = () => {
     setOk("");
   };
 
-  //Borra mensajes de error despues del último guardado 
+  //Borra mensajes de error despues del último guardado
   const closeErrorMessage = () => {
     setError("");
   };
@@ -490,8 +490,8 @@ const AnunciosAdd: React.FC = () => {
             </div>
           </div>
           <h1 className="text-center font-bold">Galería de imagenes</h1>
-          <Previews onFilesUploaded={handleFilesUploaded}/>
-        {/*}  <div className="grid grid-col-1 md:grid-cols-6 md:gap-4 mt-2 items-center mx-4">
+          <Previews onFilesUploaded={handleFilesUploaded} />
+          {/*}  <div className="grid grid-col-1 md:grid-cols-6 md:gap-4 mt-2 items-center mx-4">
             {images &&
               images.map((i, index) => (
                 <div key={index} className="col-span-1">
@@ -522,7 +522,7 @@ const AnunciosAdd: React.FC = () => {
               {anuncio.description}
             </textarea>
           </div>
-      
+
           {ok && (
             <div className="flex justify-between mx-auto w-11/12 md:w-3/5 mt-2 p-4 bg-green-100 border rounded-lg">
               {ok}
