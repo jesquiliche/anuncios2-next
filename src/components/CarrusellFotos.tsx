@@ -56,7 +56,7 @@ const CarruselFotos: React.FC<CarruselCategoriasProps> = ({ data,mainImage,title
                     <img
                       src={`${api_images}${p.path}`}
                       alt={p.path}
-                      className="[height=100] z-0 rounded-lg hover:scale-[1.3] transform transition-transform cursor-pointer hover:z-50"
+                      className="[height=200] z-0 rounded-lg hover:scale-[1.3] transform transition-transform cursor-pointer hover:z-50"
                       onMouseEnter={() => setImagePreview(`${api_images}${p.path}`)}
                       onMouseLeave={() => setImagePreview(`${api_images}${mainImage2}`)}
                    />
