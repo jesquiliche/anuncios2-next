@@ -46,9 +46,9 @@ const CarruselFotos: React.FC<CarruselCategoriasProps> = ({
   const [imagePreview, setImagePreview] = useState(api_images + mainImage);
   const [mainImage2, setMainImage2] = useState(mainImage);
   return (
-    <div className="bg-white mx-auto py-2 mt-10 ">
+    <div className="bg-white mx-auto py-2">
       <div className=" mx-auto">
-        <img src={imagePreview} alt={imagePreview} />
+        
         <div className="mt-5">
           <Slider {...settings}>
             {data.map((p) => (
@@ -56,9 +56,12 @@ const CarruselFotos: React.FC<CarruselCategoriasProps> = ({
                 <div className="m-1">
                   <div className="flex flex-col items-center border-2 shadow-lg p-2 bg-white">
                     <img
-                      src={`${api_images}${p.path}`}
-                      alt={p.path}
-                      className="z-0 rounded-lg transform transition-transform cursor-pointer hover:z-50 hover:scale-105"
+                    
+                    src={`${api_images}${p.path}`}
+                    alt={p.path}
+                    className="z-0 rounded-lg"
+                  
+                  
                       onMouseEnter={() =>
                         setImagePreview(`${api_images}${p.path}`)
                       }
@@ -72,6 +75,7 @@ const CarruselFotos: React.FC<CarruselCategoriasProps> = ({
             ))}
           </Slider>
         </div>
+        <img src={imagePreview} alt={imagePreview} className="mt-10"/>
       </div>
     </div>
   );
