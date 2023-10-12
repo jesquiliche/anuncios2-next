@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import Slider from "react-slick";
 import { Foto } from "../interfaces/interfaces"; // Asegúrate de que la importación sea correcta
 
@@ -9,11 +9,9 @@ import "slick-carousel/slick/slick-theme.css";
 interface CarruselCategoriasProps {
   data: Foto[];
   title?: string;
-  mainImage:string;
 }
 
-const CarruselFotos: React.FC<CarruselCategoriasProps> = ({ data,mainImage,title }) => {
-  
+const CarruselFotos: React.FC<CarruselCategoriasProps> = ({ data, title }) => {
   const settings = {
     dots: true,
     infinite: true,
@@ -40,14 +38,10 @@ const CarruselFotos: React.FC<CarruselCategoriasProps> = ({ data,mainImage,title
   };
 
   const api_images = process.env.NEXT_PUBLIC_IMAGES_URL;
-  const [imagePreview,setImagePreview]=useState(api_images+mainImage);
-  const [mainImage2,setMainImage2]=useState(mainImage);
   return (
-    <div className="bg-white mx-auto py-2 mt-10 h-60">
+    <div className="bg-white mx-auto py-2 mt-10">
       <div className=" mx-auto">
-        <img src={imagePreview} alt={imagePreview}/>
         <div>
-          
           <Slider {...settings}>
             {data.map((p) => (
               <div key={p.path}>
@@ -57,8 +51,7 @@ const CarruselFotos: React.FC<CarruselCategoriasProps> = ({ data,mainImage,title
                       src={`${api_images}${p.path}`}
                       alt={p.path}
                       className="h-full z-0 rounded-lg hover:scale-[1.3] transform transition-transform cursor-pointer hover:z-50"
-                      onMouseEnter={() => setImagePreview(`${api_images}${p.path}`)}
-                      onMouseLeave={() => setImagePreview(`${api_images}${mainImage2}`)}
+                      onMouseEnter={() => console.log(p.path)}
                    />
                   </div>
                 </div>
