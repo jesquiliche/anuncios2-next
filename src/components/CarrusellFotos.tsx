@@ -17,7 +17,7 @@ const CarruselFotos: React.FC<CarruselCategoriasProps> = ({ data, title }) => {
     infinite: true,
     speed: 200,
     slidesToShow: 4,
-    slidesToScroll: 4,
+    slidesToScroll: 1,
     autoplay:true,
     responsive: [
       {
@@ -39,7 +39,7 @@ const CarruselFotos: React.FC<CarruselCategoriasProps> = ({ data, title }) => {
 
   const api_images = process.env.NEXT_PUBLIC_IMAGES_URL;
   return (
-    <div className="bg-white mx-auto py-2">
+    <div className="bg-white mx-auto py-2 mt-10">
       <div className=" mx-auto">
         <div>
           <Slider {...settings}>
@@ -50,7 +50,7 @@ const CarruselFotos: React.FC<CarruselCategoriasProps> = ({ data, title }) => {
                     <img
                       src={`${api_images}${p.path}`}
                       alt={p.path}
-                      className="h-40 z-0 rounded-lg hover:scale-[1.7] transform transition-transform cursor-pointer hover:z-50 overflow-y-scroll"
+                      className="h-full z-0 rounded-lg hover:scale-[1.3] transform transition-transform cursor-pointer hover:z-50"
                       onMouseEnter={() => console.log(p.path)}
                    />
                   </div>
