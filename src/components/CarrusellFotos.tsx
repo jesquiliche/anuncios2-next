@@ -18,7 +18,7 @@ const CarruselFotos: React.FC<CarruselCategoriasProps> = ({ data,mainImage,title
     dots: true,
     infinite: true,
     speed: 200,
-    slidesToShow: 4,
+    slidesToShow: 2,
     slidesToScroll: 1,
     autoplay:true,
     responsive: [
