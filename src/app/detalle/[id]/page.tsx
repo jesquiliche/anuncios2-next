@@ -21,12 +21,12 @@ export default async function Detalle({ params }: { params: { id: string } }) {
             <h1 className="text-shadow-red text-sm font-bold italic justify-end md:text-3xl">
               {Math.round(anuncio.precio)} €
             </h1>
-        {/*    <img
+            {/*    <img
               className="mt-5 rounded-lg mx-auto "
               src={`${api_images}${anuncio.imagen}`}
               alt={anuncio.titulo}
   />*/}
-            {fotos.length > 0 && <CarruselFotos data={fotos} mainImage={anuncio.imagen} />}
+            <CarruselFotos data={fotos} mainImage={anuncio.imagen} />
           </div>
 
           <div className="col-span-2 px-4 bg-white">
