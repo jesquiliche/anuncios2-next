@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import Slider from "react-slick";
 import { Foto } from "../interfaces/interfaces"; // Asegúrate de que la importación sea correcta
-
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -59,7 +58,7 @@ const CarruselFotos: React.FC<CarruselCategoriasProps> = ({
                     
                     src={`${api_images}${p.path}`}
                     alt={p.path}
-                    className="z-0 rounded-lg"
+                    className="z-0 rounded-lg "
                   
                   
                       onMouseEnter={() =>
@@ -75,7 +74,8 @@ const CarruselFotos: React.FC<CarruselCategoriasProps> = ({
             ))}
           </Slider>
         </div>
-        <img src={imagePreview} alt={imagePreview} className=""/>
+        <img src={imagePreview} alt={imagePreview} className="mt-8  scale-1 hover:transform hover:scale-[1.75] hover:translate-x-1/2 transition-transform duration-300"></img>
+        
       </div>
     </div>
   );
