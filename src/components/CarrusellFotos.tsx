@@ -84,7 +84,7 @@ const CarruselFotos: React.FC<CarruselCategoriasProps> = ({
         </div>
         <img src={imagePreview} alt={imagePreview}
          
-        className="relative mt-8  scale-1 hover:transform hover:scale-[2.5]  hover:translate-y-[-80px] hover:translate-x-[200px] border-2 p-2 bg-white transition-transform duration-300"></img>
+        className="relative mt-8  scale-1 hover:transform hover:scale-[2]  hover:translate-y-[-80px] hover:translate-x-[200px] border-2 p-2 bg-white transition-transform duration-300"></img>
         
       </div>
     </div>
