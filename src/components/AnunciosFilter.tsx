@@ -62,13 +62,12 @@ const AnunciosFilter: React.FC = () => {
     url.searchParams.set("page", page.toString());
     url.searchParams.set("limit", limit.toString());
 
-   
     if (categoria) {
       url.searchParams.set("categoria", categoria);
     }
 
     if (subcategoria) {
-        url.searchParams.set("subcategoria", subcategoria);
+      url.searchParams.set("subcategoria", subcategoria);
     }
 
     if (poblacion) {
@@ -98,12 +97,11 @@ const AnunciosFilter: React.FC = () => {
     const selectedValue = event.target.value;
     const selectedIndex = event.target.selectedIndex; // Índice de la opción seleccionada
     const selectedText = event.target.options[selectedIndex].text;
-   
+
     setCategoria(selectedText);
     setSubcategorias([]);
-    setSubCategoria('');
+    setSubCategoria("");
     if (selectedValue !== "0") {
-      
       setSubcategorias(await fetchSubcategorias(selectedValue));
     }
   };
@@ -117,7 +115,7 @@ const AnunciosFilter: React.FC = () => {
     const selectedValue = event.target.value;
     setProvincia(selectedValue);
     setPoblaciones([]);
-    setPoblacion('');
+    setPoblacion("");
     if (selectedValue != "0") {
       setPoblaciones(await fetchPoblaciones(selectedValue));
     }
