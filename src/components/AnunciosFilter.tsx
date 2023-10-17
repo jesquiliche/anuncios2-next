@@ -65,12 +65,10 @@ const AnunciosFilter: React.FC = () => {
    
     if (categoria) {
       url.searchParams.set("categoria", categoria);
-      alert(categoria)
     }
 
     if (subcategoria) {
-      alert(subcategoria)
-      url.searchParams.set("subcategoria", subcategoria);
+        url.searchParams.set("subcategoria", subcategoria);
     }
 
     if (poblacion) {
