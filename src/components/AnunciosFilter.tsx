@@ -62,21 +62,14 @@ const AnunciosFilter: React.FC = () => {
     url.searchParams.set("page", page.toString());
     url.searchParams.set("limit", limit.toString());
 
-    // Accede a los estados locales del componente y agrega los parámetros correspondientes a la URL
-    if (startDate) {
-      url.searchParams.set("fecha_desde", startDate);
-    }
-    //alert(startDate)
-
-    if (endDate) {
-      url.searchParams.set("fecha_hasta", endDate);
-    }
-
+   
     if (categoria) {
       url.searchParams.set("categoria", categoria);
+      alert(categoria)
     }
 
     if (subcategoria) {
+      alert(subcategoria)
       url.searchParams.set("subcategoria", subcategoria);
     }
 
@@ -107,9 +100,14 @@ const AnunciosFilter: React.FC = () => {
     const selectedValue = event.target.value;
     const selectedIndex = event.target.selectedIndex; // Índice de la opción seleccionada
     const selectedText = event.target.options[selectedIndex].text;
+   
     setCategoria(selectedText);
     setSubcategorias([]);
-    setSubcategorias(await fetchSubcategorias(selectedValue));
+    setSubCategoria('');
+    if (selectedValue !== "0") {
+      
+      setSubcategorias(await fetchSubcategorias(selectedValue));
+    }
   };
 
   //Cuando se selecciona la provincia rellena el combo
@@ -120,7 +118,11 @@ const AnunciosFilter: React.FC = () => {
   ) => {
     const selectedValue = event.target.value;
     setProvincia(selectedValue);
-    setPoblaciones(await fetchPoblaciones(selectedValue));
+    setPoblaciones([]);
+    setPoblacion('');
+    if (selectedValue != "0") {
+      setPoblaciones(await fetchPoblaciones(selectedValue));
+    }
   };
 
   //Ejecutar Filtro
@@ -268,7 +270,7 @@ const AnunciosFilter: React.FC = () => {
 
   return (
     <>
-     <div className="grid grid-cols-1 mx-auto md:grid-cols-1 lg:grid-cols-5  container lg:gap-4 py-5">
+      <div className="grid grid-cols-1 mx-auto md:grid-cols-1 lg:grid-cols-5  container lg:gap-4 py-5">
         <div className="w-full mx-auto border shadow-lg p-4 rounded-lg  bg-white">
           <h1 className="text-center text-xl font-bold">
             ¿Qué estás buscando?
@@ -277,36 +279,6 @@ const AnunciosFilter: React.FC = () => {
             onSubmit={handleSubmit}
             className="items-center space-y-4 mt-4 mb-4"
           >
-            {/*  <div>
-              <label htmlFor="desdeFecha" className="text-gray-700 font-bold">
-                Desde fecha:
-              </label>
-              <input
-                type="date"
-                id="desdeFecha"
-                name="desdeFecha"
-                value={startDate}
-                onChange={(e) => {setStartDate(e.target.value)
-                  alert(e.target.value)}
-                  
-                }
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
-              />
-            </div>
-            <div>
-              <label htmlFor="hastaFecha" className="text-gray-700 font-bold">
-                Hasta fecha:
-              </label>
-              <input
-                type="date"
-                id="hastaFecha"
-                name="hastaFecha"
-                value={endDate}
-                onChange={(e) => setEndDate(e.target.value)}
-                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-gray-700"
-              />
-            </div>
-              */}
             <div>
               <label htmlFor="categoria" className="text-gray-700 font-bold">
                 Categoría:
@@ -317,7 +289,7 @@ const AnunciosFilter: React.FC = () => {
                 onChange={handleCategoriaChange}
                 className="form-control w-full"
               >
-                <option value=""></option>
+                <option value="0"></option>
                 {categorias.map((c) => (
                   <option key={c.id} value={c.id}>
                     {c.nombre}
@@ -336,7 +308,7 @@ const AnunciosFilter: React.FC = () => {
                 onChange={(e) => setSubCategoria(e.target.value)}
                 className="form-control w-full"
               >
-                <option value=""></option>
+                <option value="0"></option>
                 {subcategorias.length > 0 &&
                   subcategorias.map((s) => (
                     <option key={s.id} value={s.nombre}>
@@ -466,7 +438,10 @@ const AnunciosFilter: React.FC = () => {
                       >
                         Borrar
                       </button>
-                      <Link href={`/detalle/${a.id}`} className="btn-primary w-full m-1 text-md">
+                      <Link
+                        href={`/detalle/${a.id}`}
+                        className="btn-primary w-full m-1 text-md"
+                      >
                         Ver
                       </Link>
                     </div>

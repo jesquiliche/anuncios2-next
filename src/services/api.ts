@@ -24,7 +24,7 @@ export const fetchSubcategorias = async (id: string): Promise<Subcategoria[]> =>
     const response = await fetch(`${apiUrl}/subcategorias/categoria/${id}`);
     
     if (!response.ok) {
-      throw new Error('Error em la solicitud');
+      throw new Error('Error en la solicitud');
     }
     const data: Subcategoria[] = await response.json();
     return data;
