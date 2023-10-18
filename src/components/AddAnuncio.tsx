@@ -455,6 +455,7 @@ const AnunciosAdd: React.FC = () => {
                   type="telf"
                   id="telefono"
                   name="telefono"
+                  maxLength={15}
                   value={anuncio.telefono}
                   onChange={handleOnChange}
                   required
@@ -491,19 +492,6 @@ const AnunciosAdd: React.FC = () => {
           </div>
           <h1 className="text-center font-bold">Galería de imagenes</h1>
           <Previews onFilesUploaded={handleFilesUploaded} />
-          {/*}  <div className="grid grid-col-1 md:grid-cols-6 md:gap-4 mt-2 items-center mx-4">
-            {images &&
-              images.map((i, index) => (
-                <div key={index} className="col-span-1">
-                  <img
-                    src={i}
-                    alt={`Image ${index}`}
-                    className="mx-auto z-0 "
-                  />
-                </div>
-              ))}
-          </div>
-              */}
           <div className="mx-4 mt-2">
             <label
               htmlFor="descripcion"
