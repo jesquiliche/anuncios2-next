@@ -11,8 +11,8 @@ interface UserData {
 const Login: React.FC = () => {
   const [errors, setErrors] = useState<string[]>([]);
   const [userData, setUserData] = useState<UserData>({
-    password: "test@test.com",
-    email: "12345678",
+    password: "12345678",
+    email: "test@test.com",
   });
   const router = useRouter();
 
