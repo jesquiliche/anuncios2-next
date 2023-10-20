@@ -234,9 +234,9 @@ const AnunciosFilter: React.FC = () => {
       pageButtons.push(
         <button
           key={i}
-          className={`flex items-center justify-center px-3 h-8 text-md font-medium text-white ${
-            i === page ? 'bg-gray-700' : 'bg-gray-500'
-          } rounded-l hover:bg-gray-800 dark:bg-gray-800 dark:border-gray-700 dark-text-gray-400 dark:hover-bg-gray-700 dark:hover-text-white`}
+          className={`flex  justify-center  bg-gray-500  shadow-md text-white  hover:bg-gray-700 px-4 py-1  items-center text-center border ${
+            i === page ? 'bg-gray-600' : 'bg-gray-500'
+          }  hover:bg-gray-800`}
           onClick={() => setPage(i)}
         >
           {i}
@@ -255,13 +255,13 @@ const AnunciosFilter: React.FC = () => {
             {page > 1 && (
               <>
                 <button
-                  className="flex items-center justify-center px-3 h-8 text-md font-medium text-white bg-gray-500 rounded-l hover-bg-gray-900 dark-bg-gray-800 dark-border-gray-700 dark-text-gray-400 dark-hover-bg-gray-700 dark-hover-text-white"
+                  className="flex items-center justify-center btn-page dark-bg-gray-800 dark-border-gray-700 dark-text-gray-400 dark-hover-bg-gray-700 dark-hover-text-white"
                   onClick={primeraPagina}
                 >
                   {"<<"}
                 </button>
                 <button
-                  className="flex items-center justify-center px-3 h-8 text-md font-medium text-white bg-gray-500 rounded-l hover-bg-gray-900 dark-bg-gray-800 dark-border-gray-700 dark-text-gray-400 dark-hover-bg-gray-700 dark-hover-text-white"
+                  className="flex items-center justify-center btn-page hover-bg-gray-900 dark-bg-gray-800 dark-border-gray-700 dark-text-gray-400 dark-hover-bg-gray-700 dark-hover-text-white"
                   onClick={retrocedePagina}
                 >
                   {"<"}
@@ -274,12 +274,12 @@ const AnunciosFilter: React.FC = () => {
               <>
                 <button
                   onClick={avanzaPagina}
-                  className="flex items-center justify-center px-3 h-8 text-md font-medium text-white bg-gray-500 border-0 border-l border-gray-700 rounded-r hover-bg-gray-900 dark-bg-gray-800 dark-border-gray-700 dark-text-gray-400 dark-hover-bg-gray-700 dark-hover-text-white"
+                  className="flex items-center justify-center btn-page"
                 >
                   {">"}
                 </button>
                 <button
-                  className="flex items-center justify-center px-3 h-8 text-md font-medium text-white bg-gray-500 rounded-l hover-bg-gray-900 dark-bg-gray-800 dark-border-gray-700 dark-text-gray-400 dark-hover-bg-gray-700 dark-hover-text-white"
+                  className="flex items-center justify-center btn-page"
                   onClick={ultimaPagina}
                 >
                   {">>"}
