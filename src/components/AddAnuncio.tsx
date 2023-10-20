@@ -538,7 +538,7 @@ const AnunciosAdd: React.FC = () => {
               Añadir
             </button>
             <Link href="/" className="btn-primary mx-2">
-              Volver
+              Cerrar
             </Link>
           </div>
         </form>
