@@ -27,7 +27,7 @@ const AnunciosFilter: React.FC = () => {
 
   //Paginación
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(3);
+  const [limit, setLimit] = useState(6);
   const [totalPages, setTotalPages] = useState(0);
 
   //Campos utilizados para los valores de búsqueda
@@ -38,8 +38,6 @@ const AnunciosFilter: React.FC = () => {
   const [poblacion, setPoblacion] = useState("");
   const [estado, setEstado] = useState("");
   const [titulo, setTitulo] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
 
   //Estados para reelenar los litBox
   const [categorias, setCategorias] = useState<Categoria[]>([]);
@@ -221,16 +219,14 @@ const AnunciosFilter: React.FC = () => {
   }, [page]);
 
   const RenderPagination: React.FC = () => {
-      
     // Define el valor máximo de botones de página a mostrar (en este caso, x)
     let x: number = 10;
-    if(totalPages>10){
-      x=10;
+    if (totalPages > 10) {
+      x = 10;
     } else {
-      x=totalPages;
+      x = totalPages;
     }
   
-      
     const pageButtons = [];
   
     // Genera los botones de página en el rango calculado
@@ -240,7 +236,7 @@ const AnunciosFilter: React.FC = () => {
           key={i}
           className={`flex items-center justify-center px-3 h-8 text-md font-medium text-white ${
             i === page ? 'bg-gray-700' : 'bg-gray-500'
-          } rounded-l hover:bg-gray-800 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}
+          } rounded-l hover:bg-gray-800 dark:bg-gray-800 dark:border-gray-700 dark-text-gray-400 dark:hover-bg-gray-700 dark:hover-text-white`}
           onClick={() => setPage(i)}
         >
           {i}
@@ -255,40 +251,49 @@ const AnunciosFilter: React.FC = () => {
         </h4>
         <div className="flex flex-col items-center mb-2">
           <div className="inline-flex mt-2 xs:mt-0">
-            <button
-              className="flex items-center justify-center px-3 h-8 text-md font-medium text-white bg-gray-500 rounded-l hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-              onClick={primeraPagina}
-            >
-              {"<<"}
-            </button>
-            <button
-              className="flex items-center justify-center px-3 h-8 text-md font-medium text-white bg-gray-500 rounded-l hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-              onClick={retrocedePagina}
-            >
-              {"<"}
-            </button>
+            {/* Oculta los botones "<<" y "<" si estás en la primera página */}
+            {page > 1 && (
+              <>
+                <button
+                  className="flex items-center justify-center px-3 h-8 text-md font-medium text-white bg-gray-500 rounded-l hover-bg-gray-900 dark-bg-gray-800 dark-border-gray-700 dark-text-gray-400 dark-hover-bg-gray-700 dark-hover-text-white"
+                  onClick={primeraPagina}
+                >
+                  {"<<"}
+                </button>
+                <button
+                  className="flex items-center justify-center px-3 h-8 text-md font-medium text-white bg-gray-500 rounded-l hover-bg-gray-900 dark-bg-gray-800 dark-border-gray-700 dark-text-gray-400 dark-hover-bg-gray-700 dark-hover-text-white"
+                  onClick={retrocedePagina}
+                >
+                  {"<"}
+                </button>
+              </>
+            )}
             {pageButtons}
-            <button
-              onClick={avanzaPagina}
-              className="flex items-center justify-center px-3 h-8 text-md font-medium text-white bg-gray-500 border-0 border-l border-gray-700 rounded-r hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-            >
-              {">"}
-            </button>
-            <button
-              className="flex items-center justify-center px-3 h-8 text-md font-medium text-white bg-gray-500 rounded-l hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-              onClick={ultimaPagina}
-            >
-              {">>"}
-            </button>
+            {/* Oculta los botones ">>" y ">" si estás en la última página */}
+            {page < totalPages && (
+              <>
+                <button
+                  onClick={avanzaPagina}
+                  className="flex items-center justify-center px-3 h-8 text-md font-medium text-white bg-gray-500 border-0 border-l border-gray-700 rounded-r hover-bg-gray-900 dark-bg-gray-800 dark-border-gray-700 dark-text-gray-400 dark-hover-bg-gray-700 dark-hover-text-white"
+                >
+                  {">"}
+                </button>
+                <button
+                  className="flex items-center justify-center px-3 h-8 text-md font-medium text-white bg-gray-500 rounded-l hover-bg-gray-900 dark-bg-gray-800 dark-border-gray-700 dark-text-gray-400 dark-hover-bg-gray-700 dark-hover-text-white"
+                  onClick={ultimaPagina}
+                >
+                  {">>"}
+                </button>
+              </>
+            )}
           </div>
         </div>
       </>
     );
   };
-  
-  return (
+    return (
     <>
-      <div className="grid grid-cols-1 mx-auto md:grid-cols-1 lg:grid-cols-5  container lg:gap-4 py-5">
+          <div className="grid grid-cols-1 mx-auto md:grid-cols-1 lg:grid-cols-5  container lg:gap-4 py-5">
         <div className="w-full mx-auto border shadow-lg p-4 rounded-lg  bg-white">
           <h1 className="text-center text-xl font-bold">
             ¿Qué estás buscando?
@@ -419,6 +424,7 @@ const AnunciosFilter: React.FC = () => {
         </div>
         <div className="col-span-4  w-full bg-white p-4 rounded-lg border shadow-lg">
           <h1 className="text-center text-xl font-bold">Anuncios</h1>
+          <RenderPagination />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-2">
             {anuncios &&
               anuncios?.data.map((a) => (
@@ -467,7 +473,7 @@ const AnunciosFilter: React.FC = () => {
                 </div>
               ))}
           </div>
-          <RenderPagination />
+          
         </div>
       </div>
     </>
