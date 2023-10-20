@@ -221,10 +221,37 @@ const AnunciosFilter: React.FC = () => {
   }, [page]);
 
   const RenderPagination: React.FC = () => {
+      
+    // Define el valor máximo de botones de página a mostrar (en este caso, x)
+    let x: number = 5;
+    if(totalPages>5){
+      x=5;
+    } else {
+      x=totalPages;
+    }
+  
+      
+    const pageButtons = [];
+  
+    // Genera los botones de página en el rango calculado
+    for (let i = 1; i <= x; i++) {
+      pageButtons.push(
+        <button
+          key={i}
+          className={`flex items-center justify-center px-3 h-8 text-md font-medium text-white ${
+            i === page ? 'bg-gray-700' : 'bg-gray-500'
+          } rounded-l hover:bg-gray-800 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white`}
+          onClick={() => setPage(i)}
+        >
+          {i}
+        </button>
+      );
+    }
+  
     return (
       <>
         <h4 className="text-center font-semibold">
-          {page} de {totalPages}{" "}
+          {page} de {totalPages}
         </h4>
         <div className="flex flex-col items-center mb-2">
           <div className="inline-flex mt-2 xs:mt-0">
@@ -240,6 +267,7 @@ const AnunciosFilter: React.FC = () => {
             >
               {"< "}Anterior
             </button>
+            {pageButtons}
             <button
               onClick={avanzaPagina}
               className="flex items-center justify-center px-3 h-8 text-md font-medium text-white bg-gray-500 border-0 border-l border-gray-700 rounded-r hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
@@ -257,7 +285,7 @@ const AnunciosFilter: React.FC = () => {
       </>
     );
   };
-
+  
   return (
     <>
       <div className="grid grid-cols-1 mx-auto md:grid-cols-1 lg:grid-cols-5  container lg:gap-4 py-5">
