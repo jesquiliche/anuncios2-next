@@ -136,6 +136,18 @@ const AnunciosFilter: React.FC = () => {
     }
   };
 
+  const primeraPagina = () => {
+    if (page > 1) {
+      setPage(1);
+    }
+  };
+
+  const ultimaPagina = () => {
+    if (page < totalPages) {
+      setPage(totalPages);
+    }
+  };
+
   const avanzaPagina = () => {
     if (page < totalPages) {
       setPage(page + 1); // Suma 1 para avanzar de página si no estás en la última página
@@ -218,45 +230,27 @@ const AnunciosFilter: React.FC = () => {
           <div className="inline-flex mt-2 xs:mt-0">
             <button
               className="flex items-center justify-center px-3 h-8 text-md font-medium text-white bg-gray-500 rounded-l hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+              onClick={primeraPagina}
+            >
+              {"<<"}
+            </button>
+            <button
+              className="flex items-center justify-center px-3 h-8 text-md font-medium text-white bg-gray-500 rounded-l hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
               onClick={retrocedePagina}
             >
-              <svg
-                className="w-3.5 h-3.5 mr-2"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 14 10"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M13 5H1m0 0 4 4M1 5l4-4"
-                />
-              </svg>
-              Anterior
+              {"< "}Anterior
             </button>
             <button
               onClick={avanzaPagina}
               className="flex items-center justify-center px-3 h-8 text-md font-medium text-white bg-gray-500 border-0 border-l border-gray-700 rounded-r hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
             >
-              Siguiente
-              <svg
-                className="w-3.5 h-3.5 ml-2"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 14 10"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M1 5h12m0 0L9 1m4 4L9 9"
-                />
-              </svg>
+              Siguiente{" >"}
+            </button>
+            <button
+              className="flex items-center justify-center px-3 h-8 text-md font-medium text-white bg-gray-500 rounded-l hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+              onClick={ultimaPagina}
+            >
+              {">>"}
             </button>
           </div>
         </div>
