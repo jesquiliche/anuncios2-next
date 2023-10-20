@@ -88,11 +88,11 @@ const AnunciosFilter: React.FC = () => {
   }
 
   const resetValues=()=>{
-    setCategorias([]);
+   /* setCategorias([]);
     setProvincias([]);
     setSubcategorias([]);
     setPoblaciones([]);
-    setEstados([]);
+    setEstados([]);*/
     setCategoria("");
     setSubCategoria("");
     setProvincia("");
@@ -433,13 +433,13 @@ const AnunciosFilter: React.FC = () => {
               >
                  Buscar
               </button>
-              <button
+            {/*  <button
                 
                 className="flex flex-row btn-primary mx-auto"
                 onClick={resetValues}
               >
                  Reset
-              </button>
+                  </button> */}
             </div>
           </form>
         </div>
