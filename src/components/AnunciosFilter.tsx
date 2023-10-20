@@ -27,7 +27,7 @@ const AnunciosFilter: React.FC = () => {
 
   //Paginación
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(6);
+  const [limit, setLimit] = useState(3);
   const [totalPages, setTotalPages] = useState(0);
 
   //Campos utilizados para los valores de búsqueda
@@ -223,9 +223,9 @@ const AnunciosFilter: React.FC = () => {
   const RenderPagination: React.FC = () => {
       
     // Define el valor máximo de botones de página a mostrar (en este caso, x)
-    let x: number = 5;
-    if(totalPages>5){
-      x=5;
+    let x: number = 10;
+    if(totalPages>10){
+      x=10;
     } else {
       x=totalPages;
     }
@@ -265,14 +265,14 @@ const AnunciosFilter: React.FC = () => {
               className="flex items-center justify-center px-3 h-8 text-md font-medium text-white bg-gray-500 rounded-l hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
               onClick={retrocedePagina}
             >
-              {"< "}Anterior
+              {"<"}
             </button>
             {pageButtons}
             <button
               onClick={avanzaPagina}
               className="flex items-center justify-center px-3 h-8 text-md font-medium text-white bg-gray-500 border-0 border-l border-gray-700 rounded-r hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
             >
-              Siguiente{" >"}
+              {">"}
             </button>
             <button
               className="flex items-center justify-center px-3 h-8 text-md font-medium text-white bg-gray-500 rounded-l hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
