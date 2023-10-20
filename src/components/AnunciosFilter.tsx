@@ -87,6 +87,20 @@ const AnunciosFilter: React.FC = () => {
     return url.toString();
   }
 
+  const resetValues=()=>{
+    setCategorias([]);
+    setProvincias([]);
+    setSubcategorias([]);
+    setPoblaciones([]);
+    setEstados([]);
+    setCategoria("");
+    setSubCategoria("");
+    setProvincia("");
+    setPoblacion("");
+    setEstado("");
+    setTitulo("");
+
+  }
   //Cuando una nueva Categoría se cambia refresca/rellena
   //el combo asociado a partir del id de la categoria
   const handleCategoriaChange = async (
@@ -412,12 +426,19 @@ const AnunciosFilter: React.FC = () => {
                 className="form-control w-full"
               />
             </div>
-            <div>
+            <div className="flex justify-between">
               <button
                 type="submit"
                 className="flex flex-row btn-primary mx-auto"
               >
-                <SearchIcon className="pr-1" /> Buscar
+                 Buscar
+              </button>
+              <button
+                
+                className="flex flex-row btn-primary mx-auto"
+                onClick={resetValues}
+              >
+                 Reset
               </button>
             </div>
           </form>
