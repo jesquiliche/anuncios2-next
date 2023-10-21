@@ -89,17 +89,11 @@ const AnunciosFilter: React.FC = () => {
   }
 
   const resetValues=()=>{
-   /* setCategorias([]);
-    setProvincias([]);
-    setSubcategorias([]);
-    setPoblaciones([]);
-    setEstados([]);*/
     setCategoriaValue(0);
     setCategoria("");
     setSubCategoria("");
     setSubcategorias([])
     setProvincia("");
-    
     setPoblacion("");
     setPoblaciones([])
     setEstado("");
