@@ -33,6 +33,7 @@ const AnunciosFilter: React.FC = () => {
   //Campos utilizados para los valores de búsqueda
   //en la llamada a la api
   const [categoria, setCategoria] = useState("");
+  const [categoriaValue,setCategoriaValue]=useState(0);
   const [subcategoria, setSubCategoria] = useState("");
   const [provincia, setProvincia] = useState("");
   const [poblacion, setPoblacion] = useState("");
@@ -93,10 +94,14 @@ const AnunciosFilter: React.FC = () => {
     setSubcategorias([]);
     setPoblaciones([]);
     setEstados([]);*/
+    setCategoriaValue(0);
     setCategoria("");
     setSubCategoria("");
+    setSubcategorias([])
     setProvincia("");
+    
     setPoblacion("");
+    setPoblaciones([])
     setEstado("");
     setTitulo("");
 
@@ -109,8 +114,8 @@ const AnunciosFilter: React.FC = () => {
     const selectedValue = event.target.value;
     const selectedIndex = event.target.selectedIndex; // Índice de la opción seleccionada
     const selectedText = event.target.options[selectedIndex].text;
-
     setCategoria(selectedText);
+    setCategoriaValue(+selectedValue);
     setSubcategorias([]);
     setSubCategoria("");
     if (selectedValue !== "0") {
@@ -324,6 +329,7 @@ const AnunciosFilter: React.FC = () => {
                 id="categoria"
                 name="categoria"
                 onChange={handleCategoriaChange}
+                value={categoriaValue}
                 className="form-control w-full"
               >
                 <option value="0"></option>
@@ -433,13 +439,13 @@ const AnunciosFilter: React.FC = () => {
               >
                  Buscar
               </button>
-            {/*  <button
+              <button
                 
                 className="flex flex-row btn-primary mx-auto"
                 onClick={resetValues}
               >
                  Reset
-                  </button> */}
+                  </button>
             </div>
           </form>
         </div>
